@@ -1,0 +1,19 @@
+{
+  "name": "brysonbot2.0",
+  "version": "0.1.0",
+  "description": "2.0 version of brysonbot",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xperthobbit/brysonbot2.0.git"
+  },
+  "author": "bryson",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Xperthobbit/brysonbot2.0/issues"
+  },
+  "homepage": "https://github.com/Xperthobbit/brysonbot2.0#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
+}

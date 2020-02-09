@@ -1,0 +1,12 @@
+const Discord = require('discord.js'); /* Include this if you use embeds, etc. */
+
+module.exports.run = async (Client, message, args) => {
+    /* Insert command code here */
+};
+
+module.exports.help = {
+  name: '', // <-- Command name (what the user types after prefix)
+  usage: 'NULL' // <-- Usage (not nessasary but you can include if you need to)
+};
+
+// Rename this file to <Command>.js 
