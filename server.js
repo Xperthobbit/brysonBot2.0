@@ -71,7 +71,7 @@ Client.on('message', async message => {
   let args = messageCont.slice(1);
   if (!command.startsWith(prefix)) return;
     /* Runs commands if they match the file name. Need to figure out RegEx to allow any case */
-  let cmd = Client.commands.get(command.slice(prefix.length));
+  let cmd = Client.commands.get(command.slice(prefix.length).toLowerCase()); /* Remove .toLowerCase if you don't want case sensitivity to be null */
   if (cmd) cmd.run(Client, message, args);
 });
 
