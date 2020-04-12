@@ -27,7 +27,7 @@ module.exports.run = async (Client, message, args) => {
 					`Congrats Kang! You hit :100: so you get the KANGZ role! :crown:`
 				);
 			} catch (err) {
-				console.log('Role not found on server! | ' + err.stack);
+				console.log('Role not found on server! Or failed because they have the role | ' + err.stack);
 			}
 		}
 	}
