@@ -6,73 +6,102 @@ const fs = require('fs');
 Client.commands = new Discord.Collection();
 
 fs.readdir('./cmds/', (err, files) => {
-    if (err) console.error(err);
+	if (err) console.error(err);
 
-    let jsFile = files.filter(x => x.split('.').pop() === 'js');
-    if (jsFile.length <= 0){
-        console.log('No commands in cmds!');
-        return;
-    }
+	let jsFile = files.filter((x) => x.split('.').pop() === 'js');
+	if (jsFile.length <= 0) {
+		console.log('No commands in cmds!');
+		return;
+	}
 
-    console.log(`Loading ${jsFile.length} cmds... `)
+	console.log(`Loading ${jsFile.length} cmds... `);
 
-    jsFile.forEach((f, i) => {
-        let props = require(`./cmds/${f}`);
-        Client.commands.set(props.help.name, props);
-    });
+	jsFile.forEach((f, i) => {
+		let props = require(`./cmds/${f}`);
+		Client.commands.set(props.help.name, props);
+	});
 });
 
 /* On bot activation/startup/boot */
 Client.on('ready', async () => {
-  console.log(`${Client.user.username} activated.`);
-  try {
-    let link = await Client.generateInvite(['ADMINISTRATOR']);
-    console.log('  Invite link: ' + link);
-  } catch (err) {
-    console.log('  Failed to generate link! Here is what we know: ' + err.stack);
-  }
-  Client.user.setActivity(`Active in ${Client.guilds.size} servers`);
-  console.log('Servers deployed in:');
-  Client.guilds.forEach(guild => {
-    console.log(' - ' + guild.name);
-  });
-  console.log(' ');
-  console.log(`version: ${version} by ${author}`);
-  console.log('ready.');
+	console.log(`${Client.user.username} activated.`);
+	try {
+		let link = await Client.generateInvite(['ADMINISTRATOR']);
+		console.log('  Invite link: ' + link);
+	} catch (err) {
+		console.log(
+			'  Failed to generate link! Here is what we know: ' + err.stack
+		);
+	}
+	Client.user.setActivity(`Active in ${Client.guilds.size} servers`);
+	console.log('Servers deployed in:');
+	Client.guilds.forEach((guild) => {
+		console.log(' - ' + guild.name);
+	});
+	console.log(' ');
+	console.log(`version: ${version} by ${author}`);
+	console.log('ready.');
+});
+
+/* On user join server */
+Client.on('guildMemberAdd', (memer) => {
+	let Role = message.guild.roles.find(
+		(role) => role.name === 'Gamer' /* Edit this to the role you wish to make automatic */
+	); 
+	if (!Role) {
+		return message.reply(
+			`Sorry. This server does not have ${Role} as a role... Talk to the server owner!`
+		);
+	}
+	if (message.member.roles.has(Role.id)) {
+		return message.reply('Sorry you already have that role!');
+	} else {
+		const embed2 = new Discord.RichEmbed()
+			.setColor(0x5d2079)
+			.addField('Username:', message.author.username)
+			.setDescription('Welcome to the server!')
+			.setTimestamp()
+			.setThumbnail(message.author.avatarURL);
+		message.member.addRole(Role);
+		message.reply(embed2);
+	}
 });
 
 /* If bot is added to a guild while activated */
-Client.on('guildCreate', guild => {
-  console.log(
-    `New Server joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`
-  );
-  Client.user.setActivity(`Active in ${Client.guilds.size} servers`);
+Client.on('guildCreate', (guild) => {
+	console.log(
+		`New Server joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`
+	);
+	Client.user.setActivity(`Active in ${Client.guilds.size} servers`);
 });
 
 /* If bot is removed from a guild while activated */
-Client.on('guildDelete', guild => {
-  console.log(`I have been kicked from: ${guild.name} (id: ${guild.id})`);
-  Client.user.setActivity(`Active in ${Client.guilds.size} servers`);
+Client.on('guildDelete', (guild) => {
+	console.log(`I have been kicked from: ${guild.name} (id: ${guild.id})`);
+	Client.user.setActivity(`Active in ${Client.guilds.size} servers`);
 });
+
 /* If bot loses connection, auto reconnect */
 Client.on('disconnected', () => {
-  console.log('Disconnected!');
-  console.log('Reconnecting...');
-  Client.login(token);
+	console.log('Disconnected!');
+	console.log('Reconnecting...');
+	Client.login(token);
 });
 
 /* When a message is sent in the guild */
-Client.on('message', async message => {
-  /* Startup checks */
-  if (message.author.bot) return;
-  if (message.channel.type === 'dm') return;
-  let messageCont = message.content.split(' ');
-  let command = messageCont[0];
-  let args = messageCont.slice(1);
-  if (!command.startsWith(prefix)) return;
-    /* Runs commands if they match the file name. Need to figure out RegEx to allow any case */
-  let cmd = Client.commands.get(command.slice(prefix.length).toLowerCase()); /* Remove .toLowerCase if you don't want case sensitivity to be null */
-  if (cmd) cmd.run(Client, message, args);
+Client.on('message', async (message) => {
+	/* Startup checks */
+	if (message.author.bot) return;
+	if (message.channel.type === 'dm') return;
+	let messageCont = message.content.split(' ');
+	let command = messageCont[0];
+	let args = messageCont.slice(1);
+	if (!command.startsWith(prefix)) return;
+	/* Runs commands if they match the file name. Need to figure out RegEx to allow any case */
+	let cmd = Client.commands.get(
+		command.slice(prefix.length).toLowerCase()
+	); /* Remove .toLowerCase if you don't want case sensitivity to be null */
+	if (cmd) cmd.run(Client, message, args);
 });
 
 Client.login(token);
