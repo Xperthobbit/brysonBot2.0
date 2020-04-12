@@ -5,7 +5,7 @@ const Client = new Discord.Client({ disableEveryone: true });
 const fs = require('fs');
 Client.commands = new Discord.Collection();
 let cooldown = new Set();
-let cdseconds = 10;
+let cdseconds = 5;
 
 fs.readdir('./cmds/', (err, files) => {
 	if (err) console.error(err);
@@ -98,20 +98,20 @@ Client.on('message', async (message) => {
 	let command = messageCont[0];
 	let args = messageCont.slice(1);
 	if (!command.startsWith(prefix)) return;
-	if (cooldown.has(message.author.id)){
-		message.reply("lol stop spamming (Wait 5 seconds)")
-	}
-	if(!message.member.hasPermission('ADMINISTRATOR')){
-		cooldown.add(message.author.id);
-	}
-	let cmd = Client.commands.get(
-		command.slice(prefix.length).toLowerCase()
-	); /* Remove .toLowerCase if you don't want case sensitivity to be null */
-	if (cmd) cmd.run(Client, message, args);
 
-	setTimeout(() => {
-		cooldown.delete(message.author.id)
-	}, cdseconds * 1000);
+	if (cooldown.has(message.author.id)){
+		return message.reply("lol stop spamming (Wait 5 seconds)")
+	} else {
+		let cmd = Client.commands.get(
+			command.slice(prefix.length).toLowerCase()
+		); /* Remove .toLowerCase if you don't want case sensitivity to be null */
+		if (cmd) cmd.run(Client, message, args);
+	
+		setTimeout(() => {
+			cooldown.delete(message.author.id)
+		}, cdseconds * 1000);
+	}
+	cooldown.add(message.author.id);
 });
 
 Client.login(token);
