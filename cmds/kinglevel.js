@@ -5,7 +5,7 @@ module.exports.run = async (Client, message, args) => {
     let king = function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
       }
-    message.channel.send(`Your KANG level is: ${king(100)}. :crown:`);
+    message.channel.send(`Your KANG level is: ${king(101)}. :crown:`);
 };
 
 module.exports.help = {
