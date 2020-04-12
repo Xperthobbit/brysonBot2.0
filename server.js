@@ -44,27 +44,26 @@ Client.on('ready', async () => {
 });
 
 /* On user join server */
-Client.on('guildMemberAdd', (memer) => {
-	let Role = message.guild.roles.find(
-		(role) => role.name === 'Gamer' /* Edit this to the role you wish to make automatic */
-	); 
-	if (!Role) {
-		return message.reply(
-			`Sorry. This server does not have ${Role} as a role... Talk to the server owner!`
-		);
+Client.on('guildMemberAdd', (member) => {
+	let Role = member.guild.roles.find(
+		(role) =>
+			role.name ===
+			'Gamer' /* Edit this to the role you wish to make automatic */
+	);
+	const embed2 = new Discord.RichEmbed()
+		.setColor(0x5d2079)
+		.addField('Username:', member.user.username)
+		.setDescription('Welcome to the server!')
+		.setTimestamp()
+		.setThumbnail(member.user.avatarURL);
+	try {
+		member.addRole(Role);
+	} catch (err) {
+		console.log('There was an error adding user to role | ' + err.stack);
 	}
-	if (message.member.roles.has(Role.id)) {
-		return message.reply('Sorry you already have that role!');
-	} else {
-		const embed2 = new Discord.RichEmbed()
-			.setColor(0x5d2079)
-			.addField('Username:', message.author.username)
-			.setDescription('Welcome to the server!')
-			.setTimestamp()
-			.setThumbnail(message.author.avatarURL);
-		message.member.addRole(Role);
-		message.reply(embed2);
-	}
+	member.guild.channels
+		.get('698680704770506885')
+		.send(embed2); /* Edit This ID for your channel */
 });
 
 /* If bot is added to a guild while activated */
