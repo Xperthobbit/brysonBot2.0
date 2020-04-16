@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Xperthobbit/brysonbot2.0#readme",
   "dependencies": {
     "discord.js": "^11.5.1",
+    "humanize-duration": "^3.22.0",
     "winser": "^1.0.3"
   }
 }
