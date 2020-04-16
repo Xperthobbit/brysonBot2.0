@@ -4,7 +4,8 @@ const { token, prefix } = require('./botsettings.json');
 const Client = new Discord.Client({ disableEveryone: true });
 const fs = require('fs');
 Client.commands = new Discord.Collection();
-let cooldown = new Set();
+const Duration = require('humanize-duration');
+let used = new Map();
 let cdseconds = 5;
 
 fs.readdir('./cmds/', (err, files) => {
@@ -99,19 +100,19 @@ Client.on('message', async (message) => {
 	let args = messageCont.slice(1);
 	if (!command.startsWith(prefix)) return;
 
-	if (cooldown.has(message.author.id)){
-		return message.reply("lol stop spamming (Wait 5 seconds)")
+	const cooldown = used.get(message.author.id);
+
+	if (cooldown) {
+		const remaining = Duration(cooldown - Date.now(), { units: ['s'], round: true });
+		return message.reply(`lol stop spamming (Wait ${remaining})`);
 	} else {
 		let cmd = Client.commands.get(
 			command.slice(prefix.length).toLowerCase()
 		); /* Remove .toLowerCase if you don't want case sensitivity to be null */
 		if (cmd) cmd.run(Client, message, args);
-	
-		setTimeout(() => {
-			cooldown.delete(message.author.id)
-		}, cdseconds * 1000);
 	}
-	cooldown.add(message.author.id);
+	used.set(message.author.id, Date.now() + cdseconds * 1000);
+	setTimeout(() => used.delete(message.author.id), cdseconds * 1000);
 });
 
 Client.login(token);
