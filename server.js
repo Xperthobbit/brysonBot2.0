@@ -36,7 +36,7 @@ Client.on('ready', async () => {
 			'  Failed to generate link! Here is what we know: ' + err.stack
 		);
 	}
-	Client.user.setActivity(`Active in ${Client.guilds.size} servers`);
+	Client.user.setActivity(`Version: ${version}`);
 	console.log('Servers deployed in:');
 	Client.guilds.forEach((guild) => {
 		console.log(' - ' + guild.name);

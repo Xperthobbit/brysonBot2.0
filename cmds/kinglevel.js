@@ -40,5 +40,5 @@ module.exports.run = async (Client, message, args) => {
 
 module.exports.help = {
 	name: 'kinglevel', // <-- Command name (what the user types after prefix)
-	usage: 'Checks your king level', // <-- Usage (not nessasary but you can include if you need to)
+	usage: 'kinglevel', // <-- Usage (not nessasary but you can include if you need to)
 };
