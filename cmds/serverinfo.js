@@ -3,7 +3,6 @@
 const Discord = require('discord.js');
 
 module.exports.run = async (Client, message, args) => {
-
 	let msg = await message.channel.send('Checking my database...');
 	let serverInfo = '';
 
@@ -20,6 +19,8 @@ module.exports.run = async (Client, message, args) => {
 		args[0] === 'l4d2'
 	) {
 		serverInfo = '**IP:** 70.48.151.82 \n **Port:** 27015';
+	} else if (args[0] === 'tf2' || args[0] === 'teamfortress2') {
+		serverInfo = '**IP:** 70.48.151.82 \n **Port:** 27066';
 	} else {
 		msg.delete();
 		return message.reply(`game server doesn't exist or invalid game!`);
@@ -30,7 +31,7 @@ module.exports.run = async (Client, message, args) => {
 		.setColor(0x5d2079)
 		.setTitle(`${gameTitle} SERVER INFO:`)
 		.setDescription(serverInfo)
-		.setFooter(`*Information last updated 4/16/2020`);
+		.setFooter(`*Information last updated 4/18/2020`);
 	message.channel.send(embed).catch((error) => message.reply(`${error}`));
 	msg.delete();
 };
