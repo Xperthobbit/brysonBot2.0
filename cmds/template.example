@@ -9,4 +9,6 @@ module.exports.help = {
   usage: 'NULL' // <-- Usage (not nessasary but you can include if you need to)
 };
 
-// Rename this file to <Command>.js 
+// Rename this file to <Command>.js
+
+// Use my other commands to assist in programming if needed. It's easier to just copy paste code than spend time looking for something! :^)

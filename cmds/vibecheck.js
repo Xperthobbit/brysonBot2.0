@@ -1,4 +1,4 @@
-const Discord = require('discord.js'); /* Include this if you use embeds, etc. */
+/* vibecheck.js */
 
 module.exports.run = async (Client, message, args) => {
   if (!message.mentions.users.size) {
@@ -9,7 +9,7 @@ module.exports.run = async (Client, message, args) => {
   });
   message.channel.send(
     `/////// ${List} ! You've just been 😎 **VIBE CHECKED** 😎 by ${message.author} \\\\\\\\\\\\\\\\\\\\\\\\\\\\`
-  );
+  ).catch((error) => message.reply(`${error}`));
 };
 
 module.exports.help = {

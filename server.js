@@ -8,6 +8,7 @@ const Duration = require('humanize-duration');
 let used = new Map();
 let cdseconds = 5;
 
+/* Checks for commands in cmds folder */
 fs.readdir('./cmds/', (err, files) => {
 	if (err) console.error(err);
 
@@ -61,7 +62,7 @@ Client.on('guildMemberAdd', (member) => {
 		.setThumbnail(member.user.avatarURL);
 	try {
 		member.addRole(Role);
-	} catch (e) {
+	} catch (err) {
 		console.log('There was an error adding user to role!');
 	}
 	try {
