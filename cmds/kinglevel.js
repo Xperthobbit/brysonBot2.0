@@ -11,9 +11,14 @@ module.exports.run = async (Client, message, args) => {
 	};
 	const cooldown = used.get(message.author.id);
 	if (cooldown) {
-		const remaining = Duration(cooldown - Date.now(), { units: ['h', 'm'], round: true });
+		const remaining = Duration(cooldown - Date.now(), {
+			units: ['h', 'm'],
+			round: true,
+		});
 		return message
-			.reply(`You have to wait ${remaining} before you can run this command again`)
+			.reply(
+				`You have to wait ${remaining} before you can run this command again`
+			)
 			.catch(console.error);
 	} else {
 		let level = king(101);
@@ -30,8 +35,7 @@ module.exports.run = async (Client, message, args) => {
 				);
 			} catch (err) {
 				console.log(
-					'Role not found on server! Or failed because they have the role | ' +
-						err.stack
+					'Role not found on server! Or failed because they have the role'
 				);
 			}
 		}

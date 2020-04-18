@@ -25,7 +25,8 @@ module.exports.run = async (Client, message, args) => {
     try {
       message.channel.send(embed);
     } catch (err) {
-      message.channel.send(err);
+      message.channel.send('Error!');
+      console.log(err.stack);
     }
   });
 };

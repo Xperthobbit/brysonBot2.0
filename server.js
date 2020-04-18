@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const { version, author } = require('./package.json');
-const { token, prefix } = require('./botsettings.json');
+const { token, prefix, general } = require('./botsettings.json');
 const Client = new Discord.Client({ disableEveryone: true });
 const fs = require('fs');
 Client.commands = new Discord.Collection();
@@ -61,14 +61,34 @@ Client.on('guildMemberAdd', (member) => {
 		.setThumbnail(member.user.avatarURL);
 	try {
 		member.addRole(Role);
-	} catch (err) {
-		console.log('There was an error adding user to role | ' + err.stack);
+	} catch (e) {
+		console.log('There was an error adding user to role!');
 	}
-	member.guild.channels
-		.get('698680704770506885')
-		.send(embed2); /* Edit This ID for your channel */
+	try {
+		member.guild.channels
+			.get(general) /* Edit This ID for your channel in botconfig.json */
+			.send(embed2);
+	} catch (err) {
+		console.log('Guild channel not set for Joining Server!');
+	}
 });
 
+/* On user leaves server */
+Client.on('guildMemberRemove', (member) => {
+	const embed2 = new Discord.RichEmbed()
+		.setColor(0x5d2079)
+		.addField('Username:', member.user.username)
+		.setDescription('Goodbye!')
+		.setTimestamp()
+		.setThumbnail(member.user.avatarURL);
+	try {
+		member.guild.channels
+			.get(general) /* Edit This ID for your channel in botconfig.json */
+			.send(embed2);
+	} catch (err) {
+		console.log('Guild channel not set for Leaving Server!');
+	}
+});
 /* If bot is added to a guild while activated */
 Client.on('guildCreate', (guild) => {
 	console.log(
@@ -103,7 +123,10 @@ Client.on('message', async (message) => {
 	const cooldown = used.get(message.author.id);
 
 	if (cooldown) {
-		const remaining = Duration(cooldown - Date.now(), { units: ['s'], round: true });
+		const remaining = Duration(cooldown - Date.now(), {
+			units: ['s'],
+			round: true,
+		});
 		return message.reply(`lol stop spamming (Wait ${remaining})`);
 	} else {
 		let cmd = Client.commands.get(
