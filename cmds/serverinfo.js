@@ -14,11 +14,11 @@ module.exports.run = async (Client, message, args) => {
 	} else if (args[0] === 'minecraft' || args[0] === 'mc') {
 		serverInfo = '**IP:** mc.cantfraglike.me \n **Port:**';
 	} else if (
-		args[0] === 'cs' ||
-		args[0] === 'csgo'
+		args[0] === 'l4d2' ||
+		args[0] === 'left4dead2'
 	) {
 		serverInfo = '**IP:** 70.48.151.82 \n **Port:** 27015';
-	} else if (args[0] === 'tf2' || args[0] === 'teamfortress2') {
+	} else if (args[0] === 'csgo' || args[0] === 'counterstrike') {
 		serverInfo = '**IP:** 70.48.151.82 \n **Port:** 27066';
 	} else {
 		msg.delete();
