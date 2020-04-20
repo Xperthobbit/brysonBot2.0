@@ -21,8 +21,9 @@ module.exports.run = async (Client, message, args) => {
 			if (x.Server === args[0]){
 				output += `**${x.Server}**:` + '\n' + x.IP;
 				if (x.Port !== ''){
-					output += ':' + x.Port + '\n';
-				} 
+					output += ':' + x.Port;
+				}
+				output += '\n';
 			}
 		});
 		/* Edit your games with reg ex here */
@@ -34,8 +35,9 @@ module.exports.run = async (Client, message, args) => {
 			if (x.Server === args[0]){
 				output += `**${x.Server}**:` + '\n' + x.IP;
 				if (x.Port !== ''){
-					output += ':' + x.Port + '\n';
-				} 
+					output += ':' + x.Port;
+				}
+				output += '\n';
 			}
 		});
 		/* Edit your games with reg ex here */
@@ -47,16 +49,18 @@ module.exports.run = async (Client, message, args) => {
 			if (x.Server === args[0]){
 				output += `**${x.Server}**:` + '\n' + x.IP;
 				if (x.Port !== ''){
-					output += ':' + x.Port + '\n';
-				} 
+					output += ':' + x.Port;
+				}
+				output += '\n';
 			}
 		});
 	} else if ('all') {
 		serverInfo.servers.forEach((x) => {
 			output += `**${x.Server}**:` + '\n' + x.IP;
 			if (x.Port !== ''){
-				output += ':' + x.Port + '\n';
-			} 
+				output += ':' + x.Port;
+			}
+			output += '\n';
 		});
 	} else {
 		msg.delete();
