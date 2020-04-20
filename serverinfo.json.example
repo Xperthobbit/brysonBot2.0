@@ -1,0 +1,20 @@
+{
+	"servers":
+	[
+		{
+			"Server": "Minecraft",
+			"IP": "",
+			"Port": ""
+		}, 
+		{
+			"Server": "CSGO",
+			"IP": "",
+			"Port": ""
+		},
+		{
+			"Server": "L4D2",
+			"IP": "",
+			"Port": ""
+		}
+	]	
+}
