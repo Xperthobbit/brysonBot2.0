@@ -19,7 +19,7 @@ module.exports.run = async (Client, message, args) => {
 		args[0] = 'Minecraft';
 		serverInfo.servers.forEach(x => {
 			if (x.Server === args[0]){
-				output += `**${x.Server}**:` + '\n' + x.IP;
+				output = `**${x.Server}**:` + '\n' + x.IP;
 				if (x.Port !== ''){
 					output += ':' + x.Port;
 				}
@@ -33,7 +33,7 @@ module.exports.run = async (Client, message, args) => {
 		serverInfo.servers.forEach(x => {
 							/* Edit me */
 			if (x.Server === args[0]){
-				output += `**${x.Server}**:` + '\n' + x.IP;
+				output = `**${x.Server}**:` + '\n' + x.IP;
 				if (x.Port !== ''){
 					output += ':' + x.Port;
 				}
@@ -47,7 +47,7 @@ module.exports.run = async (Client, message, args) => {
 		serverInfo.servers.forEach(x => {
 							/* Edit me */
 			if (x.Server === args[0]){
-				output += `**${x.Server}**:` + '\n' + x.IP;
+				output = `**${x.Server}**:` + '\n' + x.IP;
 				if (x.Port !== ''){
 					output += ':' + x.Port;
 				}
