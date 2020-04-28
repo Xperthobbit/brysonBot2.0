@@ -72,7 +72,7 @@ module.exports.run = async (Client, message, args) => {
     Am very proud of this tho. Works like a charm :^)
     */
 		exec(
-			`tempfile=$(mktemp) && echo 'whitelist list' | cat > $tempfile && screen -X readbuf $tempfile && screen -X paste . && rm -f $tempfile && tail -1 /home/bryson/minecraftserver/logs/latest.log | cut -d ":" -f 5 | tr , '\n' | sort`,
+			`tempfile=$(mktemp) && echo 'whitelist list' | cat > $tempfile && screen -X readbuf $tempfile && screen -X paste . && rm -f $tempfile && sleep 2 && tail -1 /home/bryson/minecraftserver/logs/latest.log | cut -d ":" -f 5 | tr , '\n' | sort`,
 			(error, stdout, stderr) => {
 				if (error) {
 					return message.channel.send(`Failed! Here's what we know: ${error}`);
