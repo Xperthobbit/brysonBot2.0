@@ -1,6 +1,6 @@
 {
   "name": "brysonbot2.0",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "2.0 version of brysonbot",
   "main": "server.js",
   "repository": {
