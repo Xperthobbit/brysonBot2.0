@@ -84,7 +84,7 @@ module.exports.run = async (Client, message, args) => {
 	}
 
 	function lastUpdatedDate (file) {  
-		const { mtime } = Fs.statSync(file);
+		const { mtime } = fs.statSync(file);
 		return mtime;
 	}
 
