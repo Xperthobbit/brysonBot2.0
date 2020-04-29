@@ -37,7 +37,7 @@ module.exports.run = async (Client, message, args) => {
 				output += '\n';
 			}
 		});
-		args[0] === 'minecraft';
+		args[0] = 'minecraft';
 		/* Edit your games with reg ex here */
 	} else if (args[0] === 'l4d2' || args[0] === 'left4dead2') {
 		/* Edit me */
@@ -83,9 +83,9 @@ module.exports.run = async (Client, message, args) => {
 		return message.reply(`game server doesn't exist or invalid game!`);
 	}
 
-	function createdDate(file) {
-		const { birthtime } = fs.statSync(file);
-		return birthtime;
+	function lastUpdatedDate (file) {  
+		const { mtime } = Fs.statSync(file);
+		return mtime;
 	}
 
 	var gameTitle = args[0].toUpperCase();
@@ -94,7 +94,7 @@ module.exports.run = async (Client, message, args) => {
 		.setTitle(`${gameTitle} SERVER INFO:`)
 		.setDescription(output)
 		.setFooter(
-			`*Information last updated ${createdDate('serverinfo.json')
+			`*Information last updated ${lastUpdatedDate('serverinfo.json')
 				.toISOString()
 				.replace('-', '/')
 				.split('T')[0]
