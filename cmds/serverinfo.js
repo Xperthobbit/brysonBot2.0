@@ -37,6 +37,7 @@ module.exports.run = async (Client, message, args) => {
 				output += '\n';
 			}
 		});
+		args[0] === 'minecraft';
 		/* Edit your games with reg ex here */
 	} else if (args[0] === 'l4d2' || args[0] === 'left4dead2') {
 		/* Edit me */
