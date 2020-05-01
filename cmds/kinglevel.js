@@ -1,6 +1,6 @@
 /* kinglevel.js */
-
-const used = new Map();
+const cooldownTime = 1000 * 60 * 60 * 12; /* 12 hours */
+const cooldowns = require('../cooldowns.json');
 const Duration = require('humanize-duration');
 
 module.exports.run = async (Client, message, args) => {
