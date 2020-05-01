@@ -37,6 +37,16 @@ module.exports.run = async (Client, message, args) => {
 				output += '\n';
 			}
 		});
+		args[0] = 'SkyFactory';
+		serverInfo.servers.forEach((x) => {
+			if (x.Server === args[0]) {
+				output += `**${x.Server}**:` + '\n' + x.IP;
+				if (x.Port !== '') {
+					output += ':' + x.Port;
+				}
+				output += '\n';
+			}
+		});
 		args[0] = 'minecraft';
 		/* Edit your games with reg ex here */
 	} else if (args[0] === 'l4d2' || args[0] === 'left4dead2') {
