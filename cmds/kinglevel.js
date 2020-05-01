@@ -4,13 +4,28 @@ const used = new Map();
 const Duration = require('humanize-duration');
 
 module.exports.run = async (Client, message, args) => {
-
 	let king = function getRandomInt(max) {
 		return Math.floor(Math.random() * Math.floor(max));
 	};
-	const cooldown = used.get(message.author.id);
-	if (cooldown) {
-		const remaining = Duration(cooldown - Date.now(), {
+
+	const userID = message.author.id;
+
+	if (!cooldowns.hasOwnProperty(userID)) {
+		cooldowns[userID] = {
+			TimeRemaining: 0,
+		};
+	} else if (cooldowns[userID].TimeRemaining < 0) {
+		cooldowns[userID] = {
+			TimeRemaining: 0,
+		};
+	}
+
+	const timeleft = new Date(cooldowns[userID].TimeRemaining);
+
+	let check = timeleft - Date.now() >= timeleft || timeleft - Date.now() <= 0;
+
+	if (!check) {
+		const remaining = Duration(timeleft - Date.now(), {
 			units: ['h', 'm'],
 			round: true,
 		});
@@ -22,8 +37,12 @@ module.exports.run = async (Client, message, args) => {
 	} else {
 		let level = king(101);
 		message.channel.send(`Your KING level is: ${level}. :crown:`);
-		used.set(message.author.id, Date.now() + 1000 * 60 * 60 * 12);
-		setTimeout(() => used.delete(message.author.id), 1000 * 60 * 60 * 12);
+		cooldowns[userID] = {
+			TimeRemaining: Date.now() + cooldownTime,
+		};
+		fs.writeFile('./cooldowns.json', JSON.stringify(cooldowns), (err) => {
+			if (err) console.log(err);
+		});
 		if (level === 100) {
 			let role = message.guild.roles.find((role) => role.name == 'KANGZ');
 			let Member = message.guild.member(message.author);
