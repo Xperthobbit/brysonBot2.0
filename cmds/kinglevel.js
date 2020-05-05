@@ -2,6 +2,7 @@
 const cooldownTime = 1000 * 60 * 60 * 12; /* 12 hours */
 const cooldowns = require('../cooldowns.json');
 const Duration = require('humanize-duration');
+const fs = require('fs');
 
 module.exports.run = async (Client, message, args) => {
 	let king = function getRandomInt(max) {
