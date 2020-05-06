@@ -27,7 +27,7 @@ module.exports.run = async (Client, message, args) => {
 			}
 		});
 		/* Edit me. If you don't have another mc server delete this */
-		args[0] = 'RLCraft';
+		args[0] = 'Hardcore SMP';
 		serverInfo.servers.forEach((x) => {
 			if (x.Server === args[0]) {
 				output += `**${x.Server}**:` + '\n' + x.IP;
