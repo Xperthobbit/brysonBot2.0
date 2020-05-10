@@ -118,6 +118,7 @@ Client.on('message', async (message) => {
 	if (message.channel.type === 'dm') return;
 	let messageCont = message.content.split(' ');
 	let command = messageCont[0];
+	if (command === '!commands') command = '!cmds';
 	let args = messageCont.slice(1);
 	if (!command.startsWith(prefix)) return;
 
