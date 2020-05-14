@@ -9,11 +9,12 @@ module.exports.run = async (Client, message, args) => {
 		return Math.floor(Math.random() * Math.floor(max));
 	};
 	let level = simp(2);
-	if (message.member.id === reaper) {
+	/*if (message.member.id === reaper) {
 		message.channel
 			.send(`You're a **KING SIMP** lol`)
 			.catch((error) => message.reply(`${error}`));
-	} else if (level === 1) {
+	
+	}*/ if (level === 1) {
 		message.channel
 			.send(`You're not a SIMP! Good for you! :smile:`)
 			.catch((error) => message.reply(`${error}`));
