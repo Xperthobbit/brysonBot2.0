@@ -27,17 +27,7 @@ module.exports.run = async (Client, message, args) => {
 			}
 		});
 		/* Edit me. If you don't have another mc server delete this */
-		args[0] = 'HardcoreSMP';
-		serverInfo.servers.forEach((x) => {
-			if (x.Server === args[0]) {
-				output += `**${x.Server}**:` + '\n' + x.IP;
-				if (x.Port !== '') {
-					output += ':' + x.Port;
-				}
-				output += '\n';
-			}
-		});
-		args[0] = 'SkyFactory';
+		args[0] = 'MC1.16';
 		serverInfo.servers.forEach((x) => {
 			if (x.Server === args[0]) {
 				output += `**${x.Server}**:` + '\n' + x.IP;
