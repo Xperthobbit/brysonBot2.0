@@ -10,6 +10,7 @@ module.exports.run = async (Client, message, args) => {
 	};
 
 	const userID = message.author.id;
+	const Member = message.guild.member(message.author);
 
 	if (!cooldowns.hasOwnProperty(userID)) {
 		cooldowns[userID] = {
@@ -46,11 +47,18 @@ module.exports.run = async (Client, message, args) => {
 		});
 		if (level === 100) {
 			let role = message.guild.roles.find((role) => role.name == 'KANGZ');
-			let Member = message.guild.member(message.author);
 			await Member.addRole(role);
 			message
 				.reply(
 					`Congrats Kang! You hit :100: so you get the KANGZ role! :crown:`
+				)
+				.catch((error) => message.reply(`${error}`));
+		} else if (Member.roles.has(message.guild.roles.find((role) => role.name == 'KANGZ')) && level === 0 || level === 1) {
+			let role = message.guild.roles.find((role) => role.name == 'KANGZ');
+			await Member.removeRole(role);
+			message
+				.reply(
+					`sorry scrub! You just lost your KANGZ role! :crown:`
 				)
 				.catch((error) => message.reply(`${error}`));
 		}
