@@ -8,6 +8,9 @@ module.exports.run = async (Client, message, args) => {
 	const serverInfo = require('../serverinfo.json');
 	let output = '';
 
+	/*
+	Ok so I basically am yanderedev lol 
+	*/
 	if (!args[0]) {
 		msg.delete();
 		return message.reply(
@@ -15,29 +18,22 @@ module.exports.run = async (Client, message, args) => {
 		);
 		/* Edit your games with reg ex here */
 	} else if (args[0] === 'minecraft' || args[0] === 'mc') {
-		/* Edit me */
+		/* 
+		Ok so basically, this grabs data from the "servers" array, looks for object "minecraft", and if it finds it, takes the data from inside that object array and prints it into the embed. 
+		TLDR: took me a hot minute to figure out how to grab the data of a nested array inside an object.
+		*/
 		args[0] = 'Minecraft';
 		serverInfo.servers.forEach((x) => {
-			if (x.Server === args[0]) {
-				output = `**${x.Server}**:` + '\n' + x.IP;
-				if (x.Port !== '') {
-					output += ':' + x.Port;
-				}
-				output += '\n';
+			if (x.minecraft) {
+				x.minecraft.forEach((y) => {
+					output += `**${y.Server}**:` + '\n' + y.IP;
+					if (y.Port !== '') {
+						output += ':' + y.Port;
+					}
+					output += '\n';
+				});
 			}
 		});
-		/* Edit me. If you don't have another mc server delete this */
-		args[0] = 'MC1.16';
-		serverInfo.servers.forEach((x) => {
-			if (x.Server === args[0]) {
-				output += `**${x.Server}**:` + '\n' + x.IP;
-				if (x.Port !== '') {
-					output += ':' + x.Port;
-				}
-				output += '\n';
-			}
-		});
-		args[0] = 'minecraft';
 		/* Edit your games with reg ex here */
 	} else if (args[0] === 'l4d2' || args[0] === 'left4dead2') {
 		/* Edit me */
@@ -72,18 +68,28 @@ module.exports.run = async (Client, message, args) => {
 		});
 	} else if ('all') {
 		serverInfo.servers.forEach((x) => {
-			output += `**${x.Server}**:` + '\n' + x.IP;
-			if (x.Port !== '') {
-				output += ':' + x.Port;
+			if (x.minecraft) {
+				x.minecraft.forEach((y) => {
+					output += `**${y.Server}**:` + '\n' + y.IP;
+					if (y.Port !== '') {
+						output += ':' + y.Port;
+					}
+					output += '\n';
+				});
+			} else {
+				output += `**${x.Server}**:` + '\n' + x.IP;
+				if (x.Port !== '') {
+					output += ':' + x.Port;
+				}
+				output += '\n';
 			}
-			output += '\n';
 		});
 	} else {
 		msg.delete();
 		return message.reply(`game server doesn't exist or invalid game!`);
 	}
 
-	function lastUpdatedDate (file) {  
+	function lastUpdatedDate(file) {
 		const { mtime } = fs.statSync(file);
 		return mtime;
 	}

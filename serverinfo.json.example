@@ -2,10 +2,20 @@
 	"servers":
 	[
 		{
-			"Server": "Minecraft",
-			"IP": "",
-			"Port": ""
-		}, 
+			"Minecraft": 
+			[
+				{
+					"Server": "Vanilla",
+					"IP": "",
+					"Port": ""
+				},
+				{
+					"Server": "RLCraft",
+					"IP": "",
+					"Port": ""
+				}
+			]
+		},
 		{
 			"Server": "CSGO",
 			"IP": "",
