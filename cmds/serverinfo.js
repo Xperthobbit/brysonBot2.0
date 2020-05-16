@@ -9,7 +9,22 @@ module.exports.run = async (Client, message, args) => {
 	let output = '';
 
 	/*
-	Ok so I basically am yanderedev lol 
+	Ok so basically, this grabs data from the "servers" array, looks for object that has an array(specified in the call), 
+	and if it finds it, takes the data from inside that object array and prints it into the embed.
+	
+	TLDR: Use this function for game server nested arrays :) 
+	*/
+	function nestedArray(array) {
+		array.forEach((x) => {
+			output += `**${x.Server}**:` + '\n' + x.IP;
+			if (x.Port !== '') {
+				output += ':' + x.Port;
+			}
+			output += '\n';
+		});
+	}
+	/*
+	Ok so I basically am yanderedev
 	*/
 	if (!args[0]) {
 		msg.delete();
@@ -18,22 +33,19 @@ module.exports.run = async (Client, message, args) => {
 		);
 		/* Edit your games with reg ex here */
 	} else if (args[0] === 'minecraft' || args[0] === 'mc') {
-		/* 
-		Ok so basically, this grabs data from the "servers" array, looks for object "minecraft", and if it finds it, takes the data from inside that object array and prints it into the embed. 
-		TLDR: took me a hot minute to figure out how to grab the data of a nested array inside an object.
-		*/
+		
 		args[0] = 'Minecraft';
 		serverInfo.servers.forEach((x) => {
-			if (x.minecraft) {
-				x.minecraft.forEach((y) => {
-					output += `**${y.Server}**:` + '\n' + y.IP;
-					if (y.Port !== '') {
-						output += ':' + y.Port;
-					}
-					output += '\n';
-				});
+			/*
+			Change ".Minecraft" to the name of the game that has multiple servers!!
+			
+			REMEMBER TO CHANGE THE BOTTOM "ALL" ELSE STATEMENT TO THE NESTED ARRAY TOO! WILL MAKE THIS BETTER IN THE FUTURE HOPEFULLY!
+			*/
+			if (x.Minecraft) {
+				nestedArray(x.Minecraft);
 			}
 		});
+
 		/* Edit your games with reg ex here */
 	} else if (args[0] === 'l4d2' || args[0] === 'left4dead2') {
 		/* Edit me */
@@ -68,14 +80,9 @@ module.exports.run = async (Client, message, args) => {
 		});
 	} else if ('all') {
 		serverInfo.servers.forEach((x) => {
-			if (x.minecraft) {
-				x.minecraft.forEach((y) => {
-					output += `**${y.Server}**:` + '\n' + y.IP;
-					if (y.Port !== '') {
-						output += ':' + y.Port;
-					}
-					output += '\n';
-				});
+			/* REMEMBER TO CHANGE ".Minecraft" to the another game too! */
+			if (x.Minecraft) {
+				nestedArray(x.Minecraft);
 			} else {
 				output += `**${x.Server}**:` + '\n' + x.IP;
 				if (x.Port !== '') {
