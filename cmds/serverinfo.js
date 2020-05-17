@@ -2,11 +2,14 @@
 /* Remember to edit the JSON file before editing the code in here! */
 const Discord = require('discord.js');
 const fs = require('fs');
-const serverInfo = require('../serverinfo.json');
+/* const serverInfo = require('../serverinfo.json');  <-- Old method */
 
 module.exports.run = async (Client, message, args) => {
 	let msg = await message.channel.send('Checking my database...');
 	let output = '';
+
+	/* New Method; Dynamically reads json for any updates */
+	let serverList = JSON.parse(fs.readFileSync('./serverinfo.json', 'utf8'));
 
 	/*
 	Ok so basically, this grabs data from the "servers" array, looks for object that has an array(specified in the call), 
@@ -55,7 +58,7 @@ module.exports.run = async (Client, message, args) => {
 		args[0].toLowerCase() === 'mc'
 	) {
 		args[0] = 'Minecraft';
-		serverInfo.servers.forEach((x) => {
+		serverList.servers.forEach((x) => {
 			/*
 			Change ".Minecraft" to the name of the game that has multiple servers!!
 			
@@ -72,9 +75,9 @@ module.exports.run = async (Client, message, args) => {
 	) {
 		/* Edit me */
 		args[0] = 'OpenFortress';
-		regArray(serverInfo.servers);
+		regArray(serverList.servers);
 	} else if ('all') {
-		serverInfo.servers.forEach((x) => {
+		serverList.servers.forEach((x) => {
 			/* 
 			REMEMBER TO CHANGE ".Minecraft" to the another game too! Create "else-if" statements for othergames until i make it better 
 			*/
