@@ -2,10 +2,10 @@
 /* Remember to edit the JSON file before editing the code in here! */
 const Discord = require('discord.js');
 const fs = require('fs');
+const serverInfo = require('../serverinfo.json');
 
 module.exports.run = async (Client, message, args) => {
 	let msg = await message.channel.send('Checking my database...');
-	const serverInfo = require('../serverinfo.json');
 	let output = '';
 
 	/*
@@ -23,6 +23,24 @@ module.exports.run = async (Client, message, args) => {
 			output += '\n';
 		});
 	}
+
+	function regArray(array) {
+		array.forEach((x) => {
+			if (x.Server === args[0]) {
+				output = `**${x.Server}**:` + '\n' + x.IP;
+				if (x.Port !== '') {
+					output += ':' + x.Port;
+				}
+				output += '\n';
+			}
+		});
+	}
+
+	function lastUpdatedDate(file) {
+		const { mtime } = fs.statSync(file);
+		return mtime;
+	}
+
 	/*
 	Ok so I basically am yanderedev
 	*/
@@ -32,8 +50,10 @@ module.exports.run = async (Client, message, args) => {
 			`please include a game server you wish to get the details for! Or type 'all' for all of them.`
 		);
 		/* Edit your games with reg ex here */
-	} else if (args[0] === 'minecraft' || args[0] === 'mc') {
-		
+	} else if (
+		args[0].toLowerCase() === 'minecraft' ||
+		args[0].toLowerCase() === 'mc'
+	) {
 		args[0] = 'Minecraft';
 		serverInfo.servers.forEach((x) => {
 			/*
@@ -45,42 +65,19 @@ module.exports.run = async (Client, message, args) => {
 				nestedArray(x.Minecraft);
 			}
 		});
-
-		/* Edit your games with reg ex here */
-	} else if (args[0] === 'l4d2' || args[0] === 'left4dead2') {
-		/* Edit me */
-		args[0] = 'L4D2';
-		serverInfo.servers.forEach((x) => {
-			/* Edit me */
-			if (x.Server === args[0]) {
-				output = `**${x.Server}**:` + '\n' + x.IP;
-				if (x.Port !== '') {
-					output += ':' + x.Port;
-				}
-				output += '\n';
-			}
-		});
 		/* Edit your games with reg ex here */
 	} else if (
-		args[0] === 'csgo' ||
-		args[0] === 'counterstrike' ||
-		args[0] === 'cs'
+		args[0].toLowerCase() === 'openfortress' ||
+		args[0].toLowerCase() === 'of'
 	) {
 		/* Edit me */
-		args[0] = 'CSGO';
-		serverInfo.servers.forEach((x) => {
-			/* Edit me */
-			if (x.Server === args[0]) {
-				output = `**${x.Server}**:` + '\n' + x.IP;
-				if (x.Port !== '') {
-					output += ':' + x.Port;
-				}
-				output += '\n';
-			}
-		});
+		args[0] = 'OpenFortress';
+		regArray(serverInfo.servers);
 	} else if ('all') {
 		serverInfo.servers.forEach((x) => {
-			/* REMEMBER TO CHANGE ".Minecraft" to the another game too! */
+			/* 
+			REMEMBER TO CHANGE ".Minecraft" to the another game too! Create "else-if" statements for othergames until i make it better 
+			*/
 			if (x.Minecraft) {
 				nestedArray(x.Minecraft);
 			} else {
@@ -94,11 +91,6 @@ module.exports.run = async (Client, message, args) => {
 	} else {
 		msg.delete();
 		return message.reply(`game server doesn't exist or invalid game!`);
-	}
-
-	function lastUpdatedDate(file) {
-		const { mtime } = fs.statSync(file);
-		return mtime;
 	}
 
 	var gameTitle = args[0].toUpperCase();
