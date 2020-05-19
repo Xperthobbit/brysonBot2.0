@@ -120,7 +120,7 @@ Client.on('message', async (message) => {
 	let command = messageCont[0];
 	if (command === '!commands') command = '!cmds';
 	let args = messageCont.slice(1);
-	if (!command.startsWith(prefix)) {
+	if (!command.startsWith(prefix) || command.startsWith(prefix)) {
 		let who = function getRandomInt() {
 			return Math.floor(Math.random() * Math.floor(10));
 		};
