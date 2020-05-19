@@ -120,7 +120,18 @@ Client.on('message', async (message) => {
 	let command = messageCont[0];
 	if (command === '!commands') command = '!cmds';
 	let args = messageCont.slice(1);
-	if (!command.startsWith(prefix)) return;
+	if (!command.startsWith(prefix)) {
+		let who = function getRandomInt() {
+			return Math.floor(Math.random() * Math.floor(3));
+		};
+	
+		if (who() === 1) {
+			message.reply('who asked?');
+		}
+		else {
+			return;
+		}
+	};
 
 	const cooldown = used.get(message.author.id);
 
