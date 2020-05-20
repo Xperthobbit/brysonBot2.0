@@ -122,11 +122,14 @@ Client.on('message', async (message) => {
 	let args = messageCont.slice(1);
 	if (!command.startsWith(prefix)) {
 		let who = function getRandomInt() {
-			return Math.floor(Math.random() * Math.floor(10));
+			return Math.floor(Math.random() * Math.floor(15));
 		};
-	
-		if (who() === 1) {
+		
+		let check = who();
+		if (check === 1) {
 			message.reply('who asked?');
+		} else if (check === 0) {
+			message.reply({files: ['./No one cares.mp4']})
 		}
 		else {
 			return;
