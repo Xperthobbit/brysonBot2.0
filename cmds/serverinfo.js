@@ -76,7 +76,13 @@ module.exports.run = async (Client, message, args) => {
 		/* Edit me */
 		args[0] = 'OpenFortress';
 		regArray(serverList.servers);
-	} else if ('all') {
+	} else if (
+		args[0].toLowerCase() === 'garrysmod' ||
+		args[0].toLowerCase() === 'gmod'
+	) {
+		args[0] = 'GarrysMod';
+		regArray(serverList.servers);
+	} else if (args[0].toLowerCase() === 'all') {
 		serverList.servers.forEach((x) => {
 			/* 
 			REMEMBER TO CHANGE ".Minecraft" to the another game too! Create "else-if" statements for othergames until i make it better 
