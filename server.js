@@ -130,12 +130,12 @@ Client.on('message', async (message) => {
 			message.reply('who asked?');
 		} else if (check === 0) {
 			message.reply({ files: ['./No one cares.mp4'] });
-		}
 	} else if (check === 2) {
 		message.reply({ files: ['./shutit.mp4'] });
 	} else {
 		return;
 	}
+};
 
 	const cooldown = used.get(message.author.id);
 
