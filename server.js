@@ -134,6 +134,8 @@ Client.on('message', async (message) => {
 		message.reply({ files: ['./shutit.mp4'] });
 	} else if (check === 3) {
 		message.reply({ files: ['./video0_2.mp4']});
+	} else if (check === 20) {
+		message.reply(`that's cringe. :grimacing:`);
 	} else {
 		return;
 	}
