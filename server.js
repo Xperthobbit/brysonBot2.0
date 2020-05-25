@@ -122,7 +122,7 @@ Client.on('message', async (message) => {
 	let args = messageCont.slice(1);
 	if (!command.startsWith(prefix)) {
 		let who = function getRandomInt() {
-			return Math.floor(Math.random() * Math.floor(55));
+			return Math.floor(Math.random() * Math.floor(70));
 		};
 
 		let check = who();
@@ -132,6 +132,8 @@ Client.on('message', async (message) => {
 			message.reply({ files: ['./No one cares.mp4'] });
 	} else if (check === 2) {
 		message.reply({ files: ['./shutit.mp4'] });
+	} else if (check === 3) {
+		message.reply({ files: ['./video0_2.mp4']});
 	} else {
 		return;
 	}
