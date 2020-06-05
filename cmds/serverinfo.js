@@ -36,7 +36,7 @@ module.exports.run = async (Client, message, args) => {
 				}
 				output += '\n';
 				if (x.Password) {
-					output += `Password: ${x.Password}`;
+					output += `**Password**: ${x.Password}`;
 				}
 			}
 		});
