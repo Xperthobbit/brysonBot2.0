@@ -30,13 +30,14 @@ module.exports.run = async (Client, message, args) => {
 	function regArray(array) {
 		array.forEach((x) => {
 			if (x.Server === args[0]) {
-				output = `**${x.Server}**:` + '\n' + x.IP;
+				output = `**${x.Server}**:` + x.IP;
 				if (x.Port !== '') {
 					output += ':' + x.Port;
 				}
 				output += '\n';
 				if (x.Password) {
 					output += `**Password**: ${x.Password}`;
+					output += '\n';
 				}
 			}
 		});
