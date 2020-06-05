@@ -35,6 +35,9 @@ module.exports.run = async (Client, message, args) => {
 					output += ':' + x.Port;
 				}
 				output += '\n';
+				if (x.Password) {
+					output += `Password: ${x.Password}`;
+				}
 			}
 		});
 	}
