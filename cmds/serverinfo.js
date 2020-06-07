@@ -81,11 +81,10 @@ module.exports.run = async (Client, message, args) => {
 		args[0] = 'OpenFortress';
 		regArray(serverList.servers);
 	} else if (
-		args[0].toLowerCase() === 'svencoop' ||
-		args[0].toLowerCase() === 'sven'
+		args[0].toLowerCase() === 'unturned'
 	) {
 		/* Edit me */
-		args[0] = 'Sven-Coop';
+		args[0] = 'Unturned';
 		regArray(serverList.servers);
 	} else if (
 		args[0].toLowerCase() === 'garrysmod' ||
