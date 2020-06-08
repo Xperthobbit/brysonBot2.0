@@ -122,7 +122,7 @@ Client.on('message', async (message) => {
 	let args = messageCont.slice(1);
 	if (!command.startsWith(prefix)) {
 		let who = function getRandomInt() {
-			return Math.floor(Math.random() * Math.floor(170));
+			return Math.floor(Math.random() * Math.floor(1200));
 		};
 
 		let check = who();
