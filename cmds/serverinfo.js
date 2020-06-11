@@ -87,6 +87,13 @@ module.exports.run = async (Client, message, args) => {
 		args[0] = 'Unturned';
 		regArray(serverList.servers);
 	} else if (
+		args[0].toLowerCase() === 'dayz' ||
+		args[0].toLowerCase() === 'arma2'
+	) {
+		/* Edit me */
+		args[0] = 'Arma 2 DayZ';
+		regArray(serverList.servers);
+	} else if (
 		args[0].toLowerCase() === 'garrysmod' ||
 		args[0].toLowerCase() === 'gmod'
 	) {
