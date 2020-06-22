@@ -80,11 +80,6 @@ module.exports.run = async (Client, message, args) => {
 		/* Edit me */
 		args[0] = 'OpenFortress';
 		serverList.servers.forEach((x) => {
-			/*
-			Change ".Minecraft" to the name of the game that has multiple servers!!
-			
-			REMEMBER TO CHANGE THE BOTTOM "ALL" ELSE STATEMENT TO THE NESTED ARRAY TOO! WILL MAKE THIS BETTER IN THE FUTURE HOPEFULLY!
-			*/
 			if (x.OpenFortress) {
 				nestedArray(x.OpenFortress);
 			}
