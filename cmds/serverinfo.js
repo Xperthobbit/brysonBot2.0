@@ -110,6 +110,8 @@ module.exports.run = async (Client, message, args) => {
 			*/
 			if (x.Minecraft) {
 				nestedArray(x.Minecraft);
+			} else if(x.OpenFortress) {
+				nestedArray(x.OpenFortress);
 			} else {
 				output += `**${x.Server}**:` + '\n' + x.IP;
 				if (x.Port !== '') {
