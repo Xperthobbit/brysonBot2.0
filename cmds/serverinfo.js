@@ -55,6 +55,7 @@ module.exports.run = async (Client, message, args) => {
         }
       });
       break;
+    case "rust":
     case "Rust":
     case "r":
       args[0] = "Rust";
