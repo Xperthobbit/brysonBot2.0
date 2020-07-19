@@ -1,6 +1,8 @@
 /* mute.js */
 module.exports.run = async (Client, message, args) => {
   let usr = message.mentions.users.first();
+  const Member = message.guild.member(usr);
+
   if (!message.member.hasPermission("ADMINISTRATOR")) {
     return message.reply(
       "nice try. You need Administrator rights to do that. :monkey:"
