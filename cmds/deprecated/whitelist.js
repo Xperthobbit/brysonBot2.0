@@ -74,7 +74,7 @@ module.exports.run = async (Client, message, args) => {
       break;
 
     default:
-      	/* 
+      /* 
     			Change the directory of your minecraft server.
     			Am very proud of this tho. Works like a charm :^)
     	*/

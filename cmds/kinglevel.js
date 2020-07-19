@@ -68,7 +68,9 @@ module.exports.run = async (Client, message, args) => {
       }
     }
   } else {
-    return message.reply('please type the command inside the respective channel! (#king-levels)');
+    return message.reply(
+      "please type the command inside the respective channel! (#king-levels)"
+    );
   }
 };
 
