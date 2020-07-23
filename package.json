@@ -7,10 +7,6 @@
     "type": "git",
     "url": "git+https://github.com/Xperthobbit/brysonbot2.0.git"
   },
-  "scripts": {
-    "install-windows-service": "winser -i",
-    "uninstall-windows-service": "winser -r"
-  },
   "author": "bryson",
   "license": "GPL-3.0-or-later",
   "bugs": {
@@ -21,7 +17,6 @@
     "discord.js": "^11.6.4",
     "humanize-duration": "^3.22.0",
     "request": "^2.88.2",
-    "uws": "^100.0.1",
-    "winser": "^1.0.3"
+    "uws": "^100.0.1"
   }
 }
