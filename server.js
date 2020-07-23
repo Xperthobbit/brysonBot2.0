@@ -127,23 +127,28 @@ Client.on("message", async (message) => {
     };
 
     let check = who();
-    if (check === 1) {
-      message.reply("who asked?");
-    } else if (check === 0) {
-      message.reply({ files: ["./No one cares.mp4"] });
-    } else if (check === 2) {
-      message.reply({ files: ["./shutit.mp4"] });
-    } else if (check === 3) {
-      message.reply({ files: ["./video0_2.mp4"] });
-    } else if (check === 20) {
-      message.reply(`that's cringe. :grimacing:`);
-    } else if (check === 40) {
-      message.reply({ files: ["./video0.mov"] });
-    } else {
-      return;
-    }
-  }
 
+    switch (check) {
+      case 1:
+        message.reply("who asked?");
+        break;
+      case 2:
+        message.reply({ files: ["./No one cares.mp4"] });
+        break;
+      case 3:
+        message.reply({ files: ["./shutit.mp4"] });
+        break;
+      case 20:
+        message.reply({ files: ["./video0_2.mp4"] });
+        break;
+      case 40:
+        message.reply(`that's cringe. :grimacing:`);
+        break;
+      default:
+        return;
+    }
+  };
+  
   const cooldown = used.get(message.author.id);
 
   if (cooldown) {
