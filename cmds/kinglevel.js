@@ -3,6 +3,7 @@ const cooldownTime = 1000 * 60 * 60 * 12; /* 12 hours */
 const cooldowns = require("../cooldowns.json");
 const Duration = require("humanize-duration");
 const fs = require("fs");
+const { Message } = require("discord.js");
 
 module.exports.run = async (Client, message, args) => {
   if (message.channel.id === "698741020329771039") {
@@ -43,23 +44,21 @@ module.exports.run = async (Client, message, args) => {
       cooldowns[userID] = {
         TimeRemaining: Date.now() + cooldownTime,
       };
+
       fs.writeFile("./cooldowns.json", JSON.stringify(cooldowns), (err) => {
         if (err) console.log(err);
       });
+
+      let role = message.guild.roles.find((role) => role.name == "KANGZ");
+
       if (level === 100) {
-        let role = message.guild.roles.find((role) => role.name == "KANGZ");
         await Member.addRole(role);
         message
           .reply(
             `Congrats Kang! You hit :100: so you get the KANGZ role! :crown:`
           )
           .catch((error) => message.reply(`${error}`));
-      } else if (
-        Member.roles.has(
-          message.guild.roles.find((role) => role.name == "KANGZ")
-        ) &&
-        (level === 0 || level === 1)
-      ) {
+      } else if ((level === 0 || level === 1) && Member.roles.find(role => role.name == "KANGZ")) {
         let role = message.guild.roles.find((role) => role.name == "KANGZ");
         await Member.removeRole(role);
         message
