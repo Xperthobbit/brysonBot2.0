@@ -144,6 +144,8 @@ Client.on("message", async (message) => {
       case 40:
         message.reply(`that's cringe. :grimacing:`);
         break;
+      case 69:
+        message.reply({ files: ["./no one asked faggot.mp4"]})
       default:
         return;
     }
