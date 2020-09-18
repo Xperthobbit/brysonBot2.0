@@ -129,57 +129,64 @@ Client.on("message", async (message) => {
 
 	// Testing a website scan thing
 	if (command === `${prefix}ccscan`) {
-		if (!args[0]) return message.reply(`please say on/off after the command!`);
+		if (message.channel.id === "756372834447523927") {
+			if (!args[0])
+				return message.reply(`please say on/off after the command!`);
 
-		if (args[0] === "on") {
-			if (!timedCheck) {
-				timedCheck = setInterval(() => {
-					https
-						.get(api, (res) => {
-							let body = "";
+			if (args[0] === "on") {
+				if (!timedCheck) {
+					timedCheck = setInterval(() => {
+						https
+							.get(api, (res) => {
+								let body = "";
 
-							res.on("data", (chunk) => {
-								body += chunk;
-								body = body.split("<")[0];
-							});
+								res.on("data", (chunk) => {
+									body += chunk;
+									body = body.split("<")[0];
+								});
 
-							res.on("end", () => {
-								try {
-									let json = JSON.parse(body);
-									if (json.avail > 0) {
-										let embed = new Discord.RichEmbed()
-											.setTimestamp()
-											.setTitle(`3080 IS AVAILABLE @ CC.CA!`)
-											.addField(json.avail, "available at the moment!")
-											.setFooter(`Created by bryson#1337`);
-										message.channel.send(embed);
-										clearInterval(timedCheck);
+								res.on("end", () => {
+									try {
+										let json = JSON.parse(body);
+										if (json.avail > 0) {
+											let embed = new Discord.RichEmbed()
+												.setTimestamp()
+												.setTitle(`3080 IS AVAILABLE @ CC.CA!`)
+												.addField(json.avail, "available at the moment!")
+												.setFooter(`Created by bryson#1337`);
+											message.channel.send(embed);
+											clearInterval(timedCheck);
+										}
+										val = json.avail;
+									} catch (error) {
+										console.error(error.message);
 									}
-									val = json.avail;
-								} catch (error) {
-									console.error(error.message);
-								}
+								});
+							})
+							.on("error", (error) => {
+								console.error(error.message);
 							});
-						})
-						.on("error", (error) => {
-							console.error(error.message);
-						});
-					if (val >= 1) {
-						clearInterval(timedCheck);
-						console.log(`Scan stopped successfully as embed trigger fired.`);
-					}
-				}, 5000);
-				message.reply(`started a scan.`);
+						if (val >= 1) {
+							clearInterval(timedCheck);
+							console.log(`Scan stopped successfully as embed trigger fired.`);
+						}
+					}, 5000);
+					message.reply(`started a scan.`);
+				} else {
+					message.reply(`Already running a scan.`);
+				}
+			} else if (args[0] === "off" && timedCheck) {
+				message.reply(`has turned off the scan.`);
+				clearInterval(timedCheck);
+				timedCheck = undefined;
+				val = 0;
 			} else {
-				message.reply(`Already running a scan.`);
+				message.reply(`the scan is already off.`);
 			}
-		} else if (args[0] === "off" && timedCheck) {
-			message.reply(`has turned off the scan.`);
-      clearInterval(timedCheck);
-      timedCheck = undefined;
-			val = 0;
 		} else {
-			message.reply(`the scan is already off.`);
+			message.reply(
+				`sorry, this is reserved for testing in a secret channel...`
+			);
 		}
 	}
 	// EOF for Testing app
