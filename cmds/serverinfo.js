@@ -90,6 +90,7 @@ module.exports.run = async (Client, message, args) => {
 					regArray(x.csgo);
 				}
 			});
+			break;
 		case "all":
 			/* I still don't know how to make this better... */
 			serverList.servers.forEach((x) => {
