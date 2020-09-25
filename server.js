@@ -10,233 +10,167 @@ let cdseconds = 5;
 
 /* Checks for commands in cmds folder */
 fs.readdir("./cmds/", (err, files) => {
-	if (err) console.error(err);
+  if (err) console.error(err);
 
-	let jsFile = files.filter((x) => x.split(".").pop() === "js");
-	if (jsFile.length <= 0) {
-		console.log("No commands in cmds!");
-		return;
-	}
+  let jsFile = files.filter((x) => x.split(".").pop() === "js");
+  if (jsFile.length <= 0) {
+    console.log("No commands in cmds!");
+    return;
+  }
 
-	console.log(`Loading ${jsFile.length} cmds... `);
+  console.log(`Loading ${jsFile.length} cmds... `);
 
-	jsFile.forEach((f, i) => {
-		let props = require(`./cmds/${f}`);
-		Client.commands.set(props.help.name, props);
-	});
+  jsFile.forEach((f, i) => {
+    let props = require(`./cmds/${f}`);
+    Client.commands.set(props.help.name, props);
+  });
 });
 
 /* On bot activation/startup/boot */
 Client.on("ready", async () => {
-	console.log(`${Client.user.username} activated.`);
-	try {
-		let link = await Client.generateInvite(["ADMINISTRATOR"]);
-		console.log("  Invite link: " + link);
-	} catch (err) {
-		console.log(
-			"  Failed to generate link! Here is what we know: " + err.stack
-		);
-	}
-	Client.user.setActivity(`Version: ${version}`);
-	console.log("Servers deployed in:");
-	Client.guilds.forEach((guild) => {
-		console.log(" - " + guild.name);
-	});
-	console.log(" ");
-	console.log(`version: ${version} by ${author}`);
-	console.log("ready.");
+  console.log(`${Client.user.username} activated.`);
+  try {
+    let link = await Client.generateInvite(["ADMINISTRATOR"]);
+    console.log("  Invite link: " + link);
+  } catch (err) {
+    console.log(
+      "  Failed to generate link! Here is what we know: " + err.stack
+    );
+  }
+  Client.user.setActivity(`Version: ${version}`);
+  console.log("Servers deployed in:");
+  Client.guilds.forEach((guild) => {
+    console.log(" - " + guild.name);
+  });
+  console.log(" ");
+  console.log(`version: ${version} by ${author}`);
+  console.log("ready.");
 });
 
 /* On user join server */
 Client.on("guildMemberAdd", (member) => {
-	let Role = member.guild.roles.find(
-		(role) =>
-			role.name ===
-			"Gamer" /* Edit this to the role you wish to make automatic */
-	);
-	const embed2 = new Discord.RichEmbed()
-		.setColor(0x5d2079)
-		.addField("Username:", member.user.username)
-		.setDescription("Welcome to the server!")
-		.setTimestamp()
-		.setThumbnail(member.user.avatarURL);
-	try {
-		member.addRole(Role);
-	} catch (err) {
-		console.log("There was an error adding user to role!");
-	}
-	try {
-		member.guild.channels
-			.get(general) /* Edit This ID for your channel in botconfig.json */
-			.send(embed2);
-	} catch (err) {
-		console.log("Guild channel not set for Joining Server!");
-	}
+  let Role = member.guild.roles.find(
+    (role) =>
+      role.name ===
+      "Gamer" /* Edit this to the role you wish to make automatic */
+  );
+  const embed2 = new Discord.RichEmbed()
+    .setColor(0x5d2079)
+    .addField("Username:", member.user.username)
+    .setDescription("Welcome to the server!")
+    .setTimestamp()
+    .setThumbnail(member.user.avatarURL);
+  try {
+    member.addRole(Role);
+  } catch (err) {
+    console.log("There was an error adding user to role!");
+  }
+  try {
+    member.guild.channels
+      .get(general) /* Edit This ID for your channel in botconfig.json */
+      .send(embed2);
+  } catch (err) {
+    console.log("Guild channel not set for Joining Server!");
+  }
 });
 
 /* On user leaves server */
 Client.on("guildMemberRemove", (member) => {
-	const embed2 = new Discord.RichEmbed()
-		.setColor(0x5d2079)
-		.addField("Username:", member.user.username)
-		.setDescription("Goodbye!")
-		.setTimestamp()
-		.setThumbnail(member.user.avatarURL);
-	try {
-		member.guild.channels
-			.get(general) /* Edit This ID for your channel in botconfig.json */
-			.send(embed2);
-	} catch (err) {
-		console.log("Guild channel not set!");
-	}
+  const embed2 = new Discord.RichEmbed()
+    .setColor(0x5d2079)
+    .addField("Username:", member.user.username)
+    .setDescription("Goodbye!")
+    .setTimestamp()
+    .setThumbnail(member.user.avatarURL);
+  try {
+    member.guild.channels
+      .get(general) /* Edit This ID for your channel in botconfig.json */
+      .send(embed2);
+  } catch (err) {
+    console.log("Guild channel not set!");
+  }
 });
 
 /* If bot is added to a guild while activated */
 Client.on("guildCreate", (guild) => {
-	console.log(
-		`New Server joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`
-	);
-	Client.user.setActivity(`Active in ${Client.guilds.size} servers`);
+  console.log(
+    `New Server joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`
+  );
+  Client.user.setActivity(`Active in ${Client.guilds.size} servers`);
 });
 
 /* If bot is removed from a guild while activated */
 Client.on("guildDelete", (guild) => {
-	console.log(`I have been kicked from: ${guild.name} (id: ${guild.id})`);
-	Client.user.setActivity(`Active in ${Client.guilds.size} servers`);
+  console.log(`I have been kicked from: ${guild.name} (id: ${guild.id})`);
+  Client.user.setActivity(`Active in ${Client.guilds.size} servers`);
 });
 
 /* If bot loses connection, auto reconnect */
 Client.on("disconnected", () => {
-	console.log("Disconnected!");
-	console.log("Reconnecting...");
-	Client.login(token);
+  console.log("Disconnected!");
+  console.log("Reconnecting...");
+  Client.login(token);
 });
 
-var timedCheck;
-var val = 0;
-const https = require("https");
-const api =
-	"https://www.canadacomputers.com/product_info.php?ajaxstock=true&itemid=181354";
+/* Export variables for commands */
+module.exports.timedCheck = undefined;
+module.exports.val = 0;
+
 /* When a message is sent in the guild */
 Client.on("message", async (message) => {
-	/* Startup checks */
-	if (message.author.bot) return;
-	if (message.channel.type === "dm") return;
-	let messageCont = message.content.split(" ");
-	let command = messageCont[0];
-	if (command === `${prefix}commands`) command = `${prefix}cmds`;
-	let args = messageCont.slice(1);
+  /* Startup checks */
+  if (message.author.bot) return;
+  if (message.channel.type === "dm") return;
+  let messageCont = message.content.split(" ");
+  let command = messageCont[0];
+  if (command === `${prefix}commands`) command = `${prefix}cmds`;
+  let args = messageCont.slice(1);
+  if (!command.startsWith(prefix)) {
+    let who = function getRandomInt() {
+      return Math.floor(Math.random() * Math.floor(1200));
+    };
 
-	// Testing a website scan thing
-	if (command === `${prefix}ccscan`) {
-		if (message.channel.id === "756372834447523927") {
-			if (!args[0])
-				return message.reply(`please say on/off after the command!`);
+    let check = who();
 
-			if (args[0] === "on") {
-				if (!timedCheck) {
-					timedCheck = setInterval(() => {
-						https
-							.get(api, (res) => {
-								let body = "";
+    switch (check) {
+      case 1:
+        message.reply("who asked?");
+        break;
+      case 2:
+        message.reply({ files: ["./No one cares.mp4"] });
+        break;
+      case 3:
+        message.reply({ files: ["./shutit.mp4"] });
+        break;
+      case 20:
+        message.reply({ files: ["./video0_2.mp4"] });
+        break;
+      case 40:
+        message.reply(`that's cringe. :grimacing:`);
+        break;
+      case 69:
+        message.reply({ files: ["./no one asked faggot.mp4"] });
+      default:
+        return;
+    }
+  }
 
-								res.on("data", (chunk) => {
-									body += chunk;
-									body = body.split("<")[0];
-								});
+  const cooldown = used.get(message.author.id);
 
-								res.on("end", () => {
-									try {
-										let json = JSON.parse(body);
-										if (json.avail > 0) {
-											let embed = new Discord.RichEmbed()
-												.setTimestamp()
-												.setTitle(`3080 IS AVAILABLE @ CC.CA!`)
-												.addField(json.avail, "available at the moment!")
-												.setFooter(`Created by bryson#1337`);
-											message.channel.send(embed);
-											clearInterval(timedCheck);
-										}
-										val = json.avail;
-									} catch (error) {
-										console.error(error.message);
-									}
-								});
-							})
-							.on("error", (error) => {
-								console.error(error.message);
-							});
-						if (val >= 1) {
-							clearInterval(timedCheck);
-							console.log(`Scan stopped successfully as embed trigger fired.`);
-						}
-					}, 5000);
-					message.reply(`started a scan.`);
-				} else {
-					message.reply(`Already running a scan.`);
-				}
-			} else if (args[0] === "off" && timedCheck) {
-				message.reply(`has turned off the scan.`);
-				clearInterval(timedCheck);
-				timedCheck = undefined;
-				val = 0;
-			} else {
-				message.reply(`the scan is already off.`);
-			}
-		} else {
-			message.reply(
-				`sorry, this is reserved for testing in a secret channel...`
-			);
-		}
-	}
-	// EOF for Testing app
-
-	if (!command.startsWith(prefix)) {
-		let who = function getRandomInt() {
-			return Math.floor(Math.random() * Math.floor(1200));
-		};
-
-		let check = who();
-
-		switch (check) {
-			case 1:
-				message.reply("who asked?");
-				break;
-			case 2:
-				message.reply({ files: ["./No one cares.mp4"] });
-				break;
-			case 3:
-				message.reply({ files: ["./shutit.mp4"] });
-				break;
-			case 20:
-				message.reply({ files: ["./video0_2.mp4"] });
-				break;
-			case 40:
-				message.reply(`that's cringe. :grimacing:`);
-				break;
-			case 69:
-				message.reply({ files: ["./no one asked faggot.mp4"] });
-			default:
-				return;
-		}
-	}
-
-	const cooldown = used.get(message.author.id);
-
-	if (cooldown) {
-		const remaining = Duration(cooldown - Date.now(), {
-			units: ["s"],
-			round: true,
-		});
-		return message.reply(`lol stop spamming (Wait ${remaining})`);
-	} else {
-		let cmd = Client.commands.get(
-			command.slice(prefix.length).toLowerCase()
-		); /* Remove .toLowerCase if you don't want case sensitivity to be null */
-		if (cmd) cmd.run(Client, message, args);
-	}
-	used.set(message.author.id, Date.now() + cdseconds * 1000);
-	setTimeout(() => used.delete(message.author.id), cdseconds * 1000);
+  if (cooldown) {
+    const remaining = Duration(cooldown - Date.now(), {
+      units: ["s"],
+      round: true,
+    });
+    return message.reply(`lol stop spamming (Wait ${remaining})`);
+  } else {
+    let cmd = Client.commands.get(
+      command.slice(prefix.length).toLowerCase()
+    ); /* Remove .toLowerCase if you don't want case sensitivity to be null */
+    if (cmd) cmd.run(Client, message, args);
+  }
+  used.set(message.author.id, Date.now() + cdseconds * 1000);
+  setTimeout(() => used.delete(message.author.id), cdseconds * 1000);
 });
 
 Client.login(token);
