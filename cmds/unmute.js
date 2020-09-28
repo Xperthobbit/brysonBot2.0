@@ -3,16 +3,16 @@ module.exports.run = async (Client, message, args) => {
   let usr = message.mentions.users.first();
   const Member = message.guild.member(usr);
 
-  if (!message.member.hasPermission("ADMINISTRATOR")) {
+  if (!message.member.hasPermission('ADMINISTRATOR')) {
     return message.reply(
-      "nice try. You need Administrator rights to do that. :monkey:"
+      'nice try. You need Administrator rights to do that. :monkey:'
     );
   }
   if (!usr) {
-    return message.reply("please specify a user to mute!");
+    return message.reply('please specify a user to mute!');
   }
   let role = message.guild.roles.find(
-    (role) => role.name == "Get Muted Nerd HA"
+    (role) => role.name == 'Get Muted Nerd HA'
   ); // <-- Change me
   await Member.removeRole(role);
   message.channel
@@ -21,6 +21,6 @@ module.exports.run = async (Client, message, args) => {
 };
 
 module.exports.help = {
-  name: "unmute",
-  usage: "unmute <user>",
+  name: 'unmute',
+  usage: 'unmute <user>',
 };

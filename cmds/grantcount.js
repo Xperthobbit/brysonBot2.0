@@ -1,9 +1,9 @@
 /* grantcount.js */
-const fs = require("fs");
+const fs = require('fs');
 
 module.exports.run = async (Client, message, args) => {
   /* Insert command code here */
-  let count = JSON.parse(fs.readFileSync("./count.json", "utf8"));
+  let count = JSON.parse(fs.readFileSync('./count.json', 'utf8'));
 
   let curcount = count.count;
 
@@ -15,12 +15,12 @@ module.exports.run = async (Client, message, args) => {
     count: curcount + 1,
   };
 
-  fs.writeFile("./count.json", JSON.stringify(curcount), (err) => {
+  fs.writeFile('./count.json', JSON.stringify(curcount), (err) => {
     if (err) console.log(err);
   });
 };
 
 module.exports.help = {
-  name: "grantcount",
-  usage: "grantcount",
+  name: 'grantcount',
+  usage: 'grantcount',
 };

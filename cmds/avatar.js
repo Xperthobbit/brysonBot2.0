@@ -1,9 +1,10 @@
 /* Avatar.js */
-const Discord = require("discord.js"); /* Include this if you use embeds, etc. */
+const Discord = require('discord.js'); /* Include this if you use embeds, etc. */
 
 module.exports.run = async (Client, message, args) => {
-  let msg = await message.channel.send("Generating profile image...");
-  let usr = message.mentions.users.first() || message.author;
+  let msg = await message.channel.send('Generating profile image...');
+  let usr =
+    client.users.find((user) => user.username == args[0]) || message.author;
   const embed = new Discord.RichEmbed()
     .setColor(0x5d2079)
     .setAuthor(usr.username)
@@ -13,6 +14,6 @@ module.exports.run = async (Client, message, args) => {
 };
 
 module.exports.help = {
-  name: "avatar",
-  usage: "avatar [user]",
+  name: 'avatar',
+  usage: 'avatar [user]',
 };

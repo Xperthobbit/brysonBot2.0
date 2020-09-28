@@ -1,12 +1,12 @@
 /* kinglevel.js */
 const cooldownTime = 1000 * 60 * 60 * 12; /* 12 hours */
-const cooldowns = require("../cooldowns.json");
-const Duration = require("humanize-duration");
-const fs = require("fs");
-const { Message } = require("discord.js");
+const cooldowns = require('../cooldowns.json');
+const Duration = require('humanize-duration');
+const fs = require('fs');
+const { Message } = require('discord.js');
 
 module.exports.run = async (Client, message, args) => {
-  if (message.channel.id === "698741020329771039") {
+  if (message.channel.id === '698741020329771039') {
     let king = function getRandomInt(max) {
       return Math.floor(Math.random() * Math.floor(max));
     };
@@ -30,7 +30,7 @@ module.exports.run = async (Client, message, args) => {
 
     if (!check) {
       const remaining = Duration(timeleft - Date.now(), {
-        units: ["h", "m"],
+        units: ['h', 'm'],
         round: true,
       });
       return message
@@ -45,35 +45,38 @@ module.exports.run = async (Client, message, args) => {
         TimeRemaining: Date.now() + cooldownTime,
       };
 
-      fs.writeFile("./cooldowns.json", JSON.stringify(cooldowns), (err) => {
+      fs.writeFile('./cooldowns.json', JSON.stringify(cooldowns), (err) => {
         if (err) console.log(err);
       });
 
-      let role = message.guild.roles.find((role) => role.name == "KANGZ");
+      let role = message.guild.roles.find((role) => role.name == 'KANGZ');
 
       if (level === 100) {
         await Member.addRole(role);
         message
           .reply(
-            `Congrats Kang! You hit :100: so you get the KANGZ role! :crown:`
+            'Congrats Kang! You hit :100: so you get the KANGZ role! :crown:'
           )
           .catch((error) => message.reply(`${error}`));
-      } else if ((level === 0 || level === 1) && Member.roles.find(role => role.name == "KANGZ")) {
-        let role = message.guild.roles.find((role) => role.name == "KANGZ");
+      } else if (
+        (level === 0 || level === 1) &&
+        Member.roles.find((role) => role.name == 'KANGZ')
+      ) {
+        let role = message.guild.roles.find((role) => role.name == 'KANGZ');
         await Member.removeRole(role);
         message
-          .reply(`sorry scrub! You just lost your KANGZ role! :crown:`)
+          .reply('sorry scrub! You just lost your KANGZ role! :crown:')
           .catch((error) => message.reply(`${error}`));
       }
     }
   } else {
     return message.reply(
-      "please type the command inside the respective channel! (#king-levels)"
+      'please type the command inside the respective channel! (#king-levels)'
     );
   }
 };
 
 module.exports.help = {
-  name: "kinglevel",
-  usage: "kinglevel",
+  name: 'kinglevel',
+  usage: 'kinglevel',
 };
