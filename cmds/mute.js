@@ -1,6 +1,6 @@
 /* mute.js */
 module.exports.run = async (Client, message, args) => {
-  let usr = message.mentions.users.first();
+  let usr = client.users.find((user) => user.username == args[0]);
   const Member = message.guild.member(usr);
 
   if (!message.member.hasPermission('ADMINISTRATOR')) {
