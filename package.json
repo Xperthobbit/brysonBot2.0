@@ -1,21 +1,23 @@
 {
   "name": "brysonbot2.0",
-  "version": "1.4.6",
+  "version": "1.5.0",
   "description": "2.0 version of brysonbot",
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Xperthobbit/brysonbot2.0.git"
+    "url": "git+https://github.com/brysondev/brysonbot2.0.git"
   },
   "author": "bryson",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/Xperthobbit/brysonbot2.0/issues"
+    "url": "https://github.com/brysondev/brysonbot2.0/issues"
   },
-  "homepage": "https://github.com/Xperthobbit/brysonbot2.0#readme",
+  "homepage": "https://github.com/brysondev/brysonbot2.0#readme",
   "dependencies": {
-    "discord.js": "^11.6.4",
+    "discord.js": "^12.3.1",
+    "discord.js-commando": "^0.10.0",
     "humanize-duration": "^3.22.0",
+    "node.js": "0.0.1-security",
     "request": "^2.88.2",
     "uws": "^100.0.1"
   }
