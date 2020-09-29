@@ -23,7 +23,7 @@ module.exports.run = async (Client, message, args) => {
                 try {
                   let json = JSON.parse(body);
                   if (json.avail > 0) {
-                    let embed = new Discord.RichEmbed()
+                    let embed = new Discord.MessageEmbed()
                       .setColor('#003366')
                       .seturl(
                         'https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=181354'

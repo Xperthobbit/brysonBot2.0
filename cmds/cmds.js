@@ -23,7 +23,7 @@ module.exports.run = async (Client, message, args) => {
       );
     });
     filesArray.sort();
-    const embed = new Discord.RichEmbed()
+    const embed = new Discord.MessageEmbed()
       .setColor(0x5d2079)
       .setTitle('Commands:')
       .setDescription(filesArray)

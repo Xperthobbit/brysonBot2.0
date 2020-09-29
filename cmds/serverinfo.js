@@ -9,7 +9,11 @@ module.exports.run = async (Client, message, args) => {
   let output = '';
 
   /* New Method; Dynamically reads json for any updates */
-  let serverList = JSON.parse(fs.readFileSync('./serverinfo.json', 'utf8'));
+  try {
+    let serverList = JSON.parse(fs.readFileSync('./serverinfo.json', 'utf8')); 
+  } catch (err) {
+    message.reply(`Error: ${err}`);
+  }
 
   /*
 	Ok so basically, this grabs data from the "servers" array, looks for object that has an array(specified in the call), 
@@ -65,12 +69,11 @@ module.exports.run = async (Client, message, args) => {
         }
       });
       break;
-    case 'arma2':
-    case 'dayz':
-      args[0] = 'Arma 2 DayZ';
+    case 'l4d2':
+      args[0] = 'l4d2';
       serverList.servers.forEach((x) => {
-        if (x.Arma2) {
-          regArray(x.Arma2);
+        if (x.l4d2) {
+          regArray(x.l4d2);
         }
       });
       break;
@@ -97,8 +100,9 @@ module.exports.run = async (Client, message, args) => {
         if (x.Minecraft) regArray(x.Minecraft);
         if (x.OpenFortress) regArray(x.OpenFortress);
         if (x.Rust) regArray(x.Rust);
-        if (x.Arma2) regArray(x.Arma2);
+        if (x.l4d2) regArray(x.l4d2);
         if (x.GarrysMod) regArray(x.GarrysMod);
+        if (x.csgo) regArray(x.csgo);
       });
       break;
     case undefined:
@@ -114,7 +118,7 @@ module.exports.run = async (Client, message, args) => {
   }
 
   var gameTitle = args[0].toUpperCase();
-  const embed = new Discord.RichEmbed()
+  const embed = new Discord.MessageEmbed()
     .setColor(0x5d2079)
     .setTitle(`${gameTitle} SERVER INFO:`)
     .setDescription(output)

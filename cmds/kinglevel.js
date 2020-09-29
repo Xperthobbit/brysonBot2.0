@@ -6,6 +6,7 @@ const fs = require('fs');
 const { Message } = require('discord.js');
 
 module.exports.run = async (Client, message, args) => {
+  let kingrole = '698681216563544134';
   if (message.channel.id === '698741020329771039') {
     let king = function getRandomInt(max) {
       return Math.floor(Math.random() * Math.floor(max));
@@ -49,10 +50,8 @@ module.exports.run = async (Client, message, args) => {
         if (err) console.log(err);
       });
 
-      let role = message.guild.roles.find((role) => role.name == 'KANGZ');
-
       if (level === 100) {
-        await Member.addRole(role);
+        await Member.roles.add(kingrole);
         message
           .reply(
             'Congrats Kang! You hit :100: so you get the KANGZ role! :crown:'
@@ -62,8 +61,7 @@ module.exports.run = async (Client, message, args) => {
         (level === 0 || level === 1) &&
         Member.roles.find((role) => role.name == 'KANGZ')
       ) {
-        let role = message.guild.roles.find((role) => role.name == 'KANGZ');
-        await Member.removeRole(role);
+        await Member.roles.remove(kingrole);
         message
           .reply('sorry scrub! You just lost your KANGZ role! :crown:')
           .catch((error) => message.reply(`${error}`));
