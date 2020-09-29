@@ -54,9 +54,9 @@ Client.on('guildMemberAdd', (member) => {
     .addField('Username:', member.user.username)
     .setDescription('Welcome to the server!')
     .setTimestamp()
-    .setThumbnail(member.user.avatarURL);
+    .setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
   try {
-    member.addRole(Role);
+    member.roles.add(Role);
   } catch (err) {
     console.log('There was an error adding user to role!');
   }
@@ -76,7 +76,7 @@ Client.on('guildMemberRemove', (member) => {
     .addField('Username:', member.user.username)
     .setDescription('Goodbye!')
     .setTimestamp()
-    .setThumbnail(member.user.avatarURL);
+    .setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
   try {
     member.guild.channels.cache
       .get(general) /* Edit This ID for your channel in botconfig.json */
