@@ -10,7 +10,7 @@ module.exports.run = async (Client, message, args) => {
 
   /* New Method; Dynamically reads json for any updates */
   try {
-    let serverList = JSON.parse(fs.readFileSync('./serverinfo.json', 'utf8')); 
+    let serverList = JSON.parse(fs.readFileSync('./serverinfo.json', 'utf8'));
   } catch (err) {
     message.reply(`Error: ${err}`);
   }

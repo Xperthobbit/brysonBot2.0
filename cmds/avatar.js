@@ -6,24 +6,24 @@ module.exports.run = async (Client, message, args) => {
     let msg = await message.channel.send('Generating profile image...');
     let user;
     if (args[0]) {
-    if (!message.mentions.users.first()) {
-      let memberid = message.guild.members.cache
-        .filter((member) => {
-          return member.user.username === args[0];
-        })
-        .map((member) => {
-          return member.user.id;
-        })
-        .toString();
-      if (!memberid) {
-        return message.reply(
-          'please provide the username (without the numbers) or @ the person.'
-        );
+      if (!message.mentions.users.first()) {
+        let memberid = message.guild.members.cache
+          .filter((member) => {
+            return member.user.username === args[0];
+          })
+          .map((member) => {
+            return member.user.id;
+          })
+          .toString();
+        if (!memberid) {
+          return message.reply(
+            'please provide the username (without the numbers) or @ the person.'
+          );
+        }
+        user = Client.users.cache.get(memberid);
+      } else {
+        user = message.mentions.users.first();
       }
-      user = Client.users.cache.get(memberid);
-    } else {
-      user = message.mentions.users.first();
-    }
     } else {
       user = message.author;
     }

@@ -1,7 +1,7 @@
 /* mute.js */
 module.exports.run = async (Client, message, args) => {
   let user;
-  let muteRole = '701729671393443840'; // <-- Change me 
+  let muteRole = '701729671393443840'; // <-- Change me
 
   if (!message.member.hasPermission('ADMINISTRATOR')) {
     return message.reply(

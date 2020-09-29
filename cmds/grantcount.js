@@ -7,9 +7,7 @@ module.exports.run = async (Client, message, args) => {
 
   let curcount = count.count;
 
-  message.channel.send(
-    `Grant caught being a fucking idiot ${curcount} times.`
-  );
+  message.channel.send(`Grant caught being a fucking idiot ${curcount} times.`);
 
   curcount = {
     count: curcount + 1,
