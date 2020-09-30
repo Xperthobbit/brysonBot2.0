@@ -48,7 +48,6 @@ Client.on('ready', async () => {
 
 /* On user join server */
 Client.on('guildMemberAdd', (member) => {
-  let Role = message.guild.roles.cache.some((role) => role.name == 'Gamer');
   const embed2 = new Discord.MessageEmbed()
     .setColor(0x5d2079)
     .addField('Username:', member.user.username)
@@ -56,7 +55,7 @@ Client.on('guildMemberAdd', (member) => {
     .setTimestamp()
     .setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
   try {
-    member.roles.add(Role);
+    member.roles.add('698681043015827466');
   } catch (err) {
     console.log('There was an error adding user to role!');
   }
