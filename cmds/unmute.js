@@ -39,7 +39,7 @@ module.exports.run = async (Client, message, args) => {
   }
 
   message.channel
-    .send(`${user} has been muted lol.`)
+    .send(`${user} has been unmuted.`)
     .catch((error) => message.reply(`${error}`));
 };
 
