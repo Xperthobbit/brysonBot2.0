@@ -57,10 +57,7 @@ module.exports.run = async (Client, message, args) => {
             'Congrats Kang! You hit :100: so you get the KANGZ role! :crown:'
           )
           .catch((error) => message.reply(`${error}`));
-      } else if (
-        (level === 0 || level === 1) &&
-        Member.roles.find((role) => role.name == 'KANGZ')
-      ) {
+      } else if (level === 0 || level === 1) {
         await Member.roles.remove(kingrole);
         message
           .reply('sorry scrub! You just lost your KANGZ role! :crown:')
