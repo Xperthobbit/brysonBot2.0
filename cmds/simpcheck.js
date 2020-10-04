@@ -18,4 +18,5 @@ module.exports.run = async (Client, message, args) => {
 module.exports.help = {
   name: 'simpcheck',
   usage: 'simpcheck',
+  info: "Check if you're a simp"
 };

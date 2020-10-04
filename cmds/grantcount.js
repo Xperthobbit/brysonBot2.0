@@ -21,4 +21,5 @@ module.exports.run = async (Client, message, args) => {
 module.exports.help = {
   name: 'grantcount',
   usage: 'grantcount',
+  info: 'How many times can you be this dumb grant?'
 };

@@ -74,4 +74,5 @@ module.exports.run = async (Client, message, args) => {
 module.exports.help = {
   name: 'kinglevel',
   usage: 'kinglevel',
+  info: 'Check your kinglevel!'
 };

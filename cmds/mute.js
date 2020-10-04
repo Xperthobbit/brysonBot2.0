@@ -46,4 +46,5 @@ module.exports.run = async (Client, message, args) => {
 module.exports.help = {
   name: 'mute',
   usage: 'mute <user>',
+  info: 'Mutes user (Admin only)'
 };

@@ -16,4 +16,5 @@ module.exports.run = async (Client, message, args) => {
 module.exports.help = {
   name: 'clear',
   usage: 'clear <#>',
+  info: 'Clears chat (Admin only)'
 };

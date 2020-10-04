@@ -19,7 +19,7 @@ module.exports.run = async (Client, message, args) => {
     jsfiles.forEach((f, i) => {
       let props = require(`./${f}`);
       filesArray.push(
-        `**${prefix}${props.help.name}** \nUsage: ${props.help.usage}\n`
+        `**${prefix}${props.help.name}** \nUsage: ${props.help.usage}\nInfo: ${props.help.info}\n`
       );
     });
     filesArray.sort();
@@ -27,7 +27,7 @@ module.exports.run = async (Client, message, args) => {
       .setColor(0x5d2079)
       .setTitle('Commands:')
       .setDescription(filesArray)
-      .setFooter('*<> means required, [] means optional');
+      .setFooter('<> means required, [] means optional');
     message.channel.send(embed).catch((error) => message.reply(`${error}`));
   });
 };
@@ -35,4 +35,5 @@ module.exports.run = async (Client, message, args) => {
 module.exports.help = {
   name: 'cmds',
   usage: 'cmds',
+  info: 'Show all commands'
 };

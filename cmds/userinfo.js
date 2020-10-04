@@ -49,4 +49,5 @@ module.exports.run = async (Client, message, args) => {
 module.exports.help = {
   name: 'userinfo',
   usage: 'userinfo [name]',
+  info: 'Display basic user information'
 };

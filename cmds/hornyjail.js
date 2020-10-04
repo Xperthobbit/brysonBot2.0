@@ -31,4 +31,5 @@ module.exports.run = async (Client, message, args) => {
 module.exports.help = {
   name: 'hornyjail',
   usage: 'hornyjail <user>',
+  info: 'Send user to horny jail'
 };
