@@ -2,70 +2,82 @@
 /* Remember to edit the JSON file before editing the code in here! */
 const Discord = require('discord.js');
 const fs = require('fs');
+const Gamedig = require('gamedig');
 /* const serverInfo = require('../serverinfo.json');  <-- Old method */
 
 module.exports.run = async (Client, message, args) => {
   let msg = await message.channel.send('Checking my database...');
-  let output = '';
+  let output = {};
+  let digObj = {};
 
   /* New Method; Dynamically reads json for any updates */
   try {
-    let serverList = JSON.parse(fs.readFileSync('./serverinfo.json', 'utf8'));
+    var serverList = JSON.parse(fs.readFileSync('./serverinfo.json', 'utf8'));
   } catch (err) {
     message.reply(`Error: ${err}`);
   }
 
-  /*
-	Ok so basically, this grabs data from the "servers" array, looks for object that has an array(specified in the call), 
-	and if it finds it, takes the data from inside that object array and prints it into the embed.
-	
-	TLDR: Use this function for game server nested arrays :) 
-  */
+  /* Fix this later. Really bad design */
   function regArray(array) {
     array.forEach((x) => {
-      output += `__**${x.Server}**__: ` + '\n' + '**IP:** ' + x.IP;
+      output = {
+        ip: `${x.ip}`,
+      };
       if (x.Port !== '') {
-        output += '\n' + '**Port:** ' + x.Port;
+        output = {
+          ip: `${x.ip}`,
+          port: `${x.Port}`,
+        };
       }
-      output += '\n';
       if (x.Password) {
-        output += `**Password**: ${x.Password}`;
-        output += '\n';
+        output = {
+          ip: `${x.ip}`,
+          port: `${x.Port}`,
+          password: `${x.Password}`,
+        };
       }
     });
   }
 
-  function lastUpdatedDate(file) {
-    const { mtime } = fs.statSync(file);
-    return mtime;
+  function gameName(obj) {
+    obj.forEach((x) => {
+      digObj = {
+        type: `${args[0]}`,
+        host: `${x.localip}`,
+        port: `${x.Port}`,
+      };
+    });
   }
 
   switch (args[0]) {
     case 'minecraft':
     case 'mc':
-      args[0] = 'Minecraft';
+      args[0] = 'minecraft';
       serverList.servers.forEach((x) => {
-        if (x.Minecraft) {
-          regArray(x.Minecraft);
+        if (x.minecraft) {
+          regArray(x.minecraft);
+          gameName(x.minecraft);
         }
       });
       break;
     case 'openfortress':
     case 'of':
-      args[0] = 'OpenFortress';
+      args[0] = 'openfortress';
       serverList.servers.forEach((x) => {
-        if (x.OpenFortress) {
-          regArray(x.OpenFortress);
+        if (x.openfortress) {
+          regArray(x.openfortress);
+          gameName(x.openfortress);
         }
       });
       break;
     case 'rust':
     case 'Rust':
     case 'r':
-      args[0] = 'Rust';
+      args[0] = 'rust';
       serverList.servers.forEach((x) => {
-        if (x.Rust) {
-          regArray(x.Rust);
+        if (x.rust) {
+          regArray(x.rust);
+          gameName(x.rust);
         }
       });
       break;
@@ -74,15 +86,17 @@ module.exports.run = async (Client, message, args) => {
       serverList.servers.forEach((x) => {
         if (x.l4d2) {
           regArray(x.l4d2);
+          gameName(x.l4d2);
         }
       });
       break;
     case 'garrysmod':
     case 'gmod':
-      args[0] = 'GarrysMod';
+      args[0] = 'garrysmod';
       serverList.servers.forEach((x) => {
-        if (x.GarrysMod) {
-          regArray(x.GarrysMod);
+        if (x.garrysmod) {
+          regArray(x.garrysmod);
+          gameName(x.garrysmod);
         }
       });
       break;
@@ -91,20 +105,21 @@ module.exports.run = async (Client, message, args) => {
       serverList.servers.forEach((x) => {
         if (x.csgo) {
           regArray(x.csgo);
+          gameName(x.csgo);
         }
       });
       break;
-    case 'all':
-      /* I still don't know how to make this better... */
-      serverList.servers.forEach((x) => {
-        if (x.Minecraft) regArray(x.Minecraft);
-        if (x.OpenFortress) regArray(x.OpenFortress);
-        if (x.Rust) regArray(x.Rust);
-        if (x.l4d2) regArray(x.l4d2);
-        if (x.GarrysMod) regArray(x.GarrysMod);
-        if (x.csgo) regArray(x.csgo);
-      });
-      break;
+    // case 'all':
+    //   /* I still don't know how to make this better... */
+    //   serverList.servers.forEach((x) => {
+    //     if (x.Minecraft) regArray(x.Minecraft);
+    //     if (x.OpenFortress) regArray(x.OpenFortress);
+    //     if (x.Rust) regArray(x.Rust);
+    //     if (x.l4d2) regArray(x.l4d2);
+    //     if (x.GarrysMod) regArray(x.GarrysMod);
+    //     if (x.csgo) regArray(x.csgo);
+    //   });
+    //   break;
     case undefined:
       msg.delete();
       return message.reply(
@@ -117,23 +132,82 @@ module.exports.run = async (Client, message, args) => {
       break;
   }
 
+  if (digObj) {
+    var errorcode = '';
+    await Gamedig.query({
+      type: `${digObj.type}`,
+      host: `${digObj.host}`,
+      port: `${digObj.port}`,
+    })
+      .then((state) => {
+        digObj = state;
+      })
+      .catch((error) => {
+        errorcode = error;
+      });
+  }
+
+  /* Also really bad programming but w/e. */
   var gameTitle = args[0].toUpperCase();
-  const embed = new Discord.MessageEmbed()
-    .setColor(0x5d2079)
-    .setTitle(`${gameTitle} SERVER INFO:`)
-    .setDescription(output)
-    .setFooter(
-      `*Information last updated ${lastUpdatedDate('serverinfo.json')
-        .toISOString()
-        .replace('-', '/')
-        .split('T')[0]
-        .replace('-', '/')}`
-    );
+
+  if (!errorcode && output.password) {
+    var embed = new Discord.MessageEmbed()
+      .setColor(0x5d2079)
+      .setTitle(`${gameTitle} SERVER INFO:`)
+      .setThumbnail('https://img.icons8.com/plasticine/2x/server.png')
+      .setFooter(
+        `Server query made by bryson#1337 using GameDig API`,
+        'https://cdn.discordapp.com/emojis/522898117238980618.png?v=1'
+      )
+      .addFields(
+        { name: 'Server Name:', value: `${digObj.name}` },
+        { name: 'IP:', value: `${output.ip}` },
+        { name: 'Port:', value: `${output.port}` },
+        { name: 'Password Required?', value: `${digObj.password}` },
+        { name: 'Password:', value: `${output.password}` },
+        { name: 'Map:', value: `${digObj.map}` },
+        //{ name: 'Active Players:', value: `${digObj.players}` },
+        { name: 'Ping:', value: `${digObj.ping}` }
+      );
+  } else if (!errorcode && !output.password) {
+    var embed = new Discord.MessageEmbed()
+      .setColor(0x5d2079)
+      .setTitle(`${gameTitle} SERVER INFO:`)
+      .setThumbnail('https://img.icons8.com/plasticine/2x/server.png')
+      .setFooter(
+        `Server query made by bryson#1337 using GameDig API`,
+        'https://cdn.discordapp.com/emojis/522898117238980618.png?v=1'
+      )
+      .addFields(
+        { name: 'Server Name:', value: `${digObj.name}` },
+        { name: 'IP:', value: `${output.ip}` },
+        { name: 'Port:', value: `${output.port}` },
+        { name: 'Password Required?', value: `${digObj.password}` },
+        { name: 'Map:', value: `${digObj.map}` },
+        { name: 'Ping:', value: `${digObj.ping}` }
+      );
+  } else {
+    var embed = new Discord.MessageEmbed()
+      .setColor(0x5d2079)
+      .setTitle(`${gameTitle} SERVER INFO:`)
+      .setThumbnail('https://img.icons8.com/plasticine/2x/server.png')
+      .setFooter(
+        `Server query made by bryson#1337 using GameDig API`,
+        'https://cdn.discordapp.com/emojis/522898117238980618.png?v=1'
+      )
+      .addFields(
+        { name: 'IP:', value: `${output.ip}` },
+        { name: 'Port:', value: `${output.port}` },
+        { name: 'Server Query:', value: 'FAILED!' },
+        { name: 'Reason:', value: errorcode }
+      );
+  }
   message.channel.send(embed).catch((error) => message.reply(`${error}`));
   msg.delete();
 };
 
 module.exports.help = {
   name: 'serverinfo',
-  usage: 'serverinfo <game>/[all]',
+  usage: 'serverinfo <game>',
+  info: 'Display info for game and check if server is online'
 };
