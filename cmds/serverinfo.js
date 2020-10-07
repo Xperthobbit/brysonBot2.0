@@ -180,7 +180,7 @@ module.exports.run = async (Client, message, args) => {
       )
       .addFields(
         { name: 'Server Name:', value: `${digObj.name}` },
-        { name: 'Port:', value: `${output.ip}` },
+        { name: 'IP:', value: `${output.ip}` },
         { name: 'Port:', value: `${output.port}` },
         { name: 'Password Required?', value: `${digObj.password}` },
         { name: 'Ping:', value: `${digObj.ping}` }
