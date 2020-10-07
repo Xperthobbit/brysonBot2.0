@@ -62,11 +62,11 @@ module.exports.run = async (Client, message, args) => {
       break;
     case 'openfortress':
     case 'of':
-      args[0] = 'openfortress';
+      args[0] = 'tf2';
       serverList.servers.forEach((x) => {
-        if (x.openfortress) {
-          regArray(x.openfortress);
-          gameName(x.openfortress);
+        if (x.tf2) {
+          regArray(x.tf2);
+          gameName(x.tf2);
         }
       });
       break;
@@ -150,7 +150,7 @@ module.exports.run = async (Client, message, args) => {
   /* Also really bad programming but w/e. */
   var gameTitle = args[0].toUpperCase();
 
-  if (!errorcode && output.password) {
+  if (!errorcode && output.password && gameTitle !== 'MINECRAFT') {
     var embed = new Discord.MessageEmbed()
       .setColor(0x5d2079)
       .setTitle(`${gameTitle} SERVER INFO:`)
@@ -167,6 +167,21 @@ module.exports.run = async (Client, message, args) => {
         { name: 'Password:', value: `${output.password}` },
         { name: 'Map:', value: `${digObj.map}` },
         //{ name: 'Active Players:', value: `${digObj.players}` },
+        { name: 'Ping:', value: `${digObj.ping}` }
+      );
+  } else if (!errorcode && gameTitle === 'MINECRAFT') {
+    var embed = new Discord.MessageEmbed()
+      .setColor(0x5d2079)
+      .setTitle(`${gameTitle} SERVER INFO:`)
+      .setThumbnail('https://img.icons8.com/plasticine/2x/server.png')
+      .setFooter(
+        `Server query made by bryson#1337 using GameDig API`,
+        'https://cdn.discordapp.com/emojis/522898117238980618.png?v=1'
+      )
+      .addFields(
+        { name: 'Server Name:', value: `${digObj.name}` },
+        { name: 'Port:', value: `${output.port}` },
+        { name: 'Password Required?', value: `${digObj.password}` },
         { name: 'Ping:', value: `${digObj.ping}` }
       );
   } else if (!errorcode && !output.password) {
@@ -209,5 +224,5 @@ module.exports.run = async (Client, message, args) => {
 module.exports.help = {
   name: 'serverinfo',
   usage: 'serverinfo <game>',
-  info: 'Display info for game and check if server is online'
+  info: 'Display info for game and check if server is online',
 };
