@@ -9,7 +9,8 @@ module.exports.run = async (Client, message, args) => {
   let kingrole = '698681216563544134';
   if (message.channel.id === '698741020329771039') {
     let king = function getRandomInt(max) {
-      return Math.floor(Math.random() * Math.floor(max));
+      if (message.author.id === '184801768260108288') return 0;
+      else return Math.floor(Math.random() * Math.floor(max));
     };
 
     const userID = message.author.id;
@@ -52,16 +53,20 @@ module.exports.run = async (Client, message, args) => {
 
       if (level === 100) {
         await Member.roles.add(kingrole);
-        message
-          .reply(
-            'Congrats Kang! You hit :100: so you get the KANGZ role! :crown:'
-          )
-          .catch((error) => message.reply(`${error}`));
+        if (!Member.roles.cache.find((r) => r.id === kingrole))
+          message
+            .reply(
+              'Congrats Kang! You hit :100: so you get the KANGZ role! :crown:'
+            )
+            .catch((error) => message.reply(`${error}`));
+        else return;
       } else if (level === 0 || level === 1) {
         await Member.roles.remove(kingrole);
-        message
-          .reply('sorry scrub! You just lost your KANGZ role! :crown:')
-          .catch((error) => message.reply(`${error}`));
+        if (Member.roles.cache.find((r) => r.id === kingrole))
+          message
+            .reply('sorry scrub! You just lost your KANGZ role! :crown:')
+            .catch((error) => message.reply(`${error}`));
+        else return;
       }
     }
   } else {
@@ -74,5 +79,5 @@ module.exports.run = async (Client, message, args) => {
 module.exports.help = {
   name: 'kinglevel',
   usage: 'kinglevel',
-  info: 'Check your kinglevel!'
+  info: 'Check your kinglevel!',
 };
