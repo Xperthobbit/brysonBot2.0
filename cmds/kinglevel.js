@@ -9,8 +9,7 @@ module.exports.run = async (Client, message, args) => {
   let kingrole = '698681216563544134';
   if (message.channel.id === '698741020329771039') {
     let king = function getRandomInt(max) {
-      if (message.author.id === '184801768260108288') return 0;
-      else return Math.floor(Math.random() * Math.floor(max));
+      return Math.floor(Math.random() * Math.floor(max));
     };
 
     const userID = message.author.id;
