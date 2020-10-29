@@ -66,7 +66,7 @@ Client.on('guildMemberAdd', (member) => {
       )
       .send(embed2);
   } catch (err) {
-    console.log('Guild channel not set for Joining Server!');
+    console.log('Guild channel not found!' + err);
   }
 });
 
@@ -85,7 +85,7 @@ Client.on('guildMemberRemove', (member) => {
       )
       .send(embed2);
   } catch (err) {
-    console.log('Guild channel not set!');
+    console.log('Guild channel not found!' + err);
   }
 });
 
