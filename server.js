@@ -60,8 +60,10 @@ Client.on('guildMemberAdd', (member) => {
     console.log('There was an error adding user to role!');
   }
   try {
-    member.channels.cache
-      .get(general) /* Edit This ID for your channel in botconfig.json */
+    guild.channels.cache
+      .find(
+        (i) => i.name === 'general-chat'
+      )
       .send(embed2);
   } catch (err) {
     console.log('Guild channel not set for Joining Server!');
@@ -77,8 +79,10 @@ Client.on('guildMemberRemove', (member) => {
     .setTimestamp()
     .setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
   try {
-    member.channels.cache
-      .get(general) /* Edit This ID for your channel in botconfig.json */
+    guild.channels.cache
+      .find(
+        (i) => i.name === 'general-chat'
+      )
       .send(embed2);
   } catch (err) {
     console.log('Guild channel not set!');
