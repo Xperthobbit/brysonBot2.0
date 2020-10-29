@@ -60,7 +60,7 @@ Client.on('guildMemberAdd', (member) => {
     console.log('There was an error adding user to role!');
   }
   try {
-    member.guild.channels.cache
+    member.channels.cache
       .get(general) /* Edit This ID for your channel in botconfig.json */
       .send(embed2);
   } catch (err) {
@@ -77,7 +77,7 @@ Client.on('guildMemberRemove', (member) => {
     .setTimestamp()
     .setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
   try {
-    member.guild.channels.cache
+    member.channels.cache
       .get(general) /* Edit This ID for your channel in botconfig.json */
       .send(embed2);
   } catch (err) {
