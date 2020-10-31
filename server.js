@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const { version, author } = require('./package.json');
-const { token, prefix, general } = require('./botsettings.json');
+const { token, prefix } = require('./botsettings.json');
 const Client = new Discord.Client({ disableEveryone: true });
 const fs = require('fs');
 Client.commands = new Discord.Collection();
@@ -29,25 +29,24 @@ fs.readdir('./cmds/', (err, files) => {
 /* On bot activation/startup/boot */
 Client.on('ready', async () => {
   console.log(`${Client.user.username} activated.`);
-  try {
-    let link = await Client.generateInvite(['ADMINISTRATOR']);
-    console.log('Invite link: ' + link);
-  } catch (err) {
-    console.log('Failed to generate link! Here is what we know: ' + err.stack);
-  }
-  Client.user.setActivity(`Nice Server Bryson`, { type: 'WATCHING' });
-  // console.log('Servers deployed in:');
-  // Client.guilds.forEach((guild) => {
-  //   console.log(' - ' + guild.name);
-  // });
-  // Deprecated
+  //  try {
+  //    let link = await Client.generateInvite(['ADMINISTRATOR']);
+  //    console.log('Invite link: ' + link);
+  //  } catch (err) {
+  //    console.log('Failed to generate link! Here is what we know: ' + err.stack);
+  //  }
+  Client.user.setActivity(`your mom`, { type: 'WATCHING' });
+  console.log('Servers deployed in:');
+  Client.guilds.cache.forEach((guild) => {
+  console.log(' - ' + guild.name);
+  });
   console.log(' ');
   console.log(`version: ${version} by ${author}`);
   console.log('ready.');
 });
 
 /* On user join server */
-Client.on('guildMemberAdd', (member) => {
+Client.on('guildMemberAdd', member => {
   const embed2 = new Discord.MessageEmbed()
     .setColor(0x5d2079)
     .addField('Username:', member.user.username)
@@ -55,23 +54,21 @@ Client.on('guildMemberAdd', (member) => {
     .setTimestamp()
     .setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
   try {
-    member.roles.add('698681043015827466');
+    const role = member.guild.roles.cache.find(role => role.name === '698681043015827466');
+    member.roles.add(role);
   } catch (err) {
-    console.log('There was an error adding user to role!');
+    console.log(err);
   }
   try {
-    guild.channels.cache
-      .find(
-        (i) => i.name === 'general-chat'
-      )
-      .send(embed2);
+    const channel = member.guild.channels.cache.find((i) => i.name === 'general-chat');
+    channel.send(embed2);
   } catch (err) {
     console.log('Guild channel not found!' + err);
   }
 });
 
 /* On user leaves server */
-Client.on('guildMemberRemove', (member) => {
+Client.on('guildMemberRemove', member => {
   const embed2 = new Discord.MessageEmbed()
     .setColor(0x5d2079)
     .addField('Username:', member.user.username)
@@ -79,11 +76,8 @@ Client.on('guildMemberRemove', (member) => {
     .setTimestamp()
     .setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
   try {
-    guild.channels.cache
-      .find(
-        (i) => i.name === 'general-chat'
-      )
-      .send(embed2);
+    const channel = member.guild.channels.cache.find((i) => i.name === 'general-chat');
+    channel.send(embed2);
   } catch (err) {
     console.log('Guild channel not found!' + err);
   }
