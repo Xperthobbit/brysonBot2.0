@@ -62,22 +62,12 @@ module.exports.run = async (Client, message, args) => {
       break;
     case 'openfortress':
     case 'of':
-      args[0] = 'tf2';
+      args[0] = 'openfortress';
       serverList.servers.forEach((x) => {
-        if (x.tf2) {
-          regArray(x.tf2);
-          gameName(x.tf2);
-        }
-      });
-      break;
-    case 'rust':
-    case 'Rust':
-    case 'r':
-      args[0] = 'rust';
-      serverList.servers.forEach((x) => {
-        if (x.rust) {
-          regArray(x.rust);
-          gameName(x.rust);
+        if (x.openfortress) {
+          regArray(x.openfortress);
+          args[0] = 'tf2';
+          gameName(x.openfortress);
         }
       });
       break;
@@ -86,6 +76,7 @@ module.exports.run = async (Client, message, args) => {
       serverList.servers.forEach((x) => {
         if (x.l4d2) {
           regArray(x.l4d2);
+          args[0] = 'left4dead2';
           gameName(x.l4d2);
         }
       });
@@ -100,26 +91,6 @@ module.exports.run = async (Client, message, args) => {
         }
       });
       break;
-    case 'csgo':
-      args[0] = 'csgo';
-      serverList.servers.forEach((x) => {
-        if (x.csgo) {
-          regArray(x.csgo);
-          gameName(x.csgo);
-        }
-      });
-      break;
-    // case 'all':
-    //   /* I still don't know how to make this better... */
-    //   serverList.servers.forEach((x) => {
-    //     if (x.Minecraft) regArray(x.Minecraft);
-    //     if (x.OpenFortress) regArray(x.OpenFortress);
-    //     if (x.Rust) regArray(x.Rust);
-    //     if (x.l4d2) regArray(x.l4d2);
-    //     if (x.GarrysMod) regArray(x.GarrysMod);
-    //     if (x.csgo) regArray(x.csgo);
-    //   });
-    //   break;
     case undefined:
       msg.delete();
       return message.reply(
@@ -149,75 +120,59 @@ module.exports.run = async (Client, message, args) => {
 
   /* Also really bad programming but w/e. */
   var gameTitle = args[0].toUpperCase();
-
-  if (!errorcode && output.password && gameTitle !== 'MINECRAFT') {
-    var embed = new Discord.MessageEmbed()
-      .setColor(0x5d2079)
-      .setTitle(`${gameTitle} SERVER INFO:`)
-      .setThumbnail('https://img.icons8.com/plasticine/2x/server.png')
-      .setFooter(
-        `Server query made by bryson#1337 using GameDig API`,
-        'https://cdn.discordapp.com/emojis/522898117238980618.png?v=1'
-      )
-      .addFields(
-        { name: 'Server Name:', value: `${digObj.name}` },
-        { name: 'IP:', value: `${output.ip}` },
-        { name: 'Port:', value: `${output.port}` },
-        { name: 'Password Required?', value: `${digObj.password}` },
-        { name: 'Password:', value: `${output.password}` },
-        { name: 'Map:', value: `${digObj.map}` },
-        //{ name: 'Active Players:', value: `${digObj.players}` },
-        { name: 'Ping:', value: `${digObj.ping}` }
-      );
-  } else if (!errorcode && gameTitle === 'MINECRAFT') {
-    var embed = new Discord.MessageEmbed()
-      .setColor(0x5d2079)
-      .setTitle(`${gameTitle} SERVER INFO:`)
-      .setThumbnail('https://img.icons8.com/plasticine/2x/server.png')
-      .setFooter(
-        `Server query made by bryson#1337 using GameDig API`,
-        'https://cdn.discordapp.com/emojis/522898117238980618.png?v=1'
-      )
-      .addFields(
-        { name: 'Server Name:', value: `${digObj.name}` },
-        { name: 'IP:', value: `${output.ip}` },
-        { name: 'Port:', value: `${output.port}` },
-        { name: 'Password Required?', value: `${digObj.password}` },
-        { name: 'Ping:', value: `${digObj.ping}` }
-      );
-  } else if (!errorcode && !output.password) {
-    var embed = new Discord.MessageEmbed()
-      .setColor(0x5d2079)
-      .setTitle(`${gameTitle} SERVER INFO:`)
-      .setThumbnail('https://img.icons8.com/plasticine/2x/server.png')
-      .setFooter(
-        `Server query made by bryson#1337 using GameDig API`,
-        'https://cdn.discordapp.com/emojis/522898117238980618.png?v=1'
-      )
-      .addFields(
-        { name: 'Server Name:', value: `${digObj.name}` },
-        { name: 'IP:', value: `${output.ip}` },
-        { name: 'Port:', value: `${output.port}` },
-        { name: 'Password Required?', value: `${digObj.password}` },
-        { name: 'Map:', value: `${digObj.map}` },
-        { name: 'Ping:', value: `${digObj.ping}` }
-      );
-  } else {
-    var embed = new Discord.MessageEmbed()
-      .setColor(0x5d2079)
-      .setTitle(`${gameTitle} SERVER INFO:`)
-      .setThumbnail('https://img.icons8.com/plasticine/2x/server.png')
-      .setFooter(
-        `Server query made by bryson#1337 using GameDig API`,
-        'https://cdn.discordapp.com/emojis/522898117238980618.png?v=1'
-      )
-      .addFields(
-        { name: 'IP:', value: `${output.ip}` },
-        { name: 'Port:', value: `${output.port}` },
-        { name: 'Server Query:', value: 'FAILED!' },
+  var embed = new Discord.MessageEmbed()
+    .setColor(0x5d2079)
+    .setTitle(`${gameTitle} SERVER INFO:`)
+    .setThumbnail('https://img.icons8.com/plasticine/2x/server.png')
+    .setFooter(
+      `Server query made by bryson#1337 using GameDig API`,
+      'https://cdn.discordapp.com/emojis/522898117238980618.png?v=1'
+    )
+    .addFields(
+      { name: 'IP:', value: `${output.ip}` },
+      { name: 'Port:', value: `${output.port}` }
+    );
+  try {
+    if (digObj.ping) {
+      embed.addFields({
+        name: 'Ping:',
+        value: `${digObj.ping}`,
+      });
+    }
+  } catch (error) {}
+  try {
+    if (errorcode) {
+      embed.addFields(
+        {
+          name: 'Server Query:',
+          value: 'FAILED!',
+        },
         { name: 'Reason:', value: errorcode }
       );
-  }
+    }
+  } catch (error) {}
+  try {
+    if (digObj.map) {
+      embed.addFields({
+        name: 'Map:',
+        value: `${digObj.map}`,
+      });
+    }
+  } catch (error) {}
+
+  try {
+    var playerlist = [];
+    digObj.players.forEach((x) => {
+      playerlist += x.name + '\n';
+    });
+    if (digObj.players.length != 0) {
+      embed.addFields({
+        name: 'Players Online:',
+        value: `${playerlist}`,
+      });
+    }
+  } catch (error) {}
+
   message.channel.send(embed).catch((error) => message.reply(`${error}`));
   msg.delete();
 };
