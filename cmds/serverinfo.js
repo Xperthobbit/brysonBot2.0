@@ -68,6 +68,7 @@ module.exports.run = async (Client, message, args) => {
           regArray(x.openfortress);
           args[0] = 'tf2';
           gameName(x.openfortress);
+          args[0] = 'OpenFortress';
         }
       });
       break;
