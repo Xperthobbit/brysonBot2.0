@@ -4,9 +4,9 @@ const { token, prefix } = require('./botsettings.json');
 const Client = new Discord.Client({ disableEveryone: true });
 const fs = require('fs');
 Client.commands = new Discord.Collection();
-const Duration = require('humanize-duration');
-let used = new Map();
-let cdseconds = 5;
+//const Duration = require('humanize-duration');
+//let used = new Map();
+//let cdseconds = 5;
 
 /* Checks for commands in cmds folder */
 fs.readdir('./cmds/', (err, files) => {
@@ -29,16 +29,18 @@ fs.readdir('./cmds/', (err, files) => {
 /* On bot activation/startup/boot */
 Client.on('ready', async () => {
   console.log(`${Client.user.username} activated.`);
-  //  try {
-  //    let link = await Client.generateInvite(['ADMINISTRATOR']);
-  //    console.log('Invite link: ' + link);
-  //  } catch (err) {
-  //    console.log('Failed to generate link! Here is what we know: ' + err.stack);
-  //  }
+  try {
+    let link = await Client.generateInvite({
+      permissions: ['ADMINISTRATOR'],
+    });
+    console.log('Invite link: ' + link);
+  } catch (err) {
+    console.log('Failed to generate link! Here is what we know: ' + err.stack);
+  }
   Client.user.setActivity(`your mom`, { type: 'WATCHING' });
   console.log('Servers deployed in:');
   Client.guilds.cache.forEach((guild) => {
-  console.log(' - ' + guild.name);
+    console.log(' - ' + guild.name);
   });
   console.log(' ');
   console.log(`version: ${version} by ${author}`);
@@ -46,7 +48,7 @@ Client.on('ready', async () => {
 });
 
 /* On user join server */
-Client.on('guildMemberAdd', member => {
+Client.on('guildMemberAdd', (member) => {
   const embed2 = new Discord.MessageEmbed()
     .setColor(0x5d2079)
     .addField('Username:', member.user.username)
@@ -54,13 +56,17 @@ Client.on('guildMemberAdd', member => {
     .setTimestamp()
     .setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
   try {
-    const role = member.guild.roles.cache.find(role => role.name === '698681043015827466');
+    const role = member.guild.roles.cache.find(
+      (role) => role.name === '698681043015827466'
+    );
     member.roles.add(role);
   } catch (err) {
     console.log(err);
   }
   try {
-    const channel = member.guild.channels.cache.find((i) => i.name === 'general-chat');
+    const channel = member.guild.channels.cache.find(
+      (i) => i.name === 'general-chat'
+    );
     channel.send(embed2);
   } catch (err) {
     console.log('Guild channel not found!' + err);
@@ -68,7 +74,7 @@ Client.on('guildMemberAdd', member => {
 });
 
 /* On user leaves server */
-Client.on('guildMemberRemove', member => {
+Client.on('guildMemberRemove', (member) => {
   const embed2 = new Discord.MessageEmbed()
     .setColor(0x5d2079)
     .addField('Username:', member.user.username)
@@ -76,7 +82,9 @@ Client.on('guildMemberRemove', member => {
     .setTimestamp()
     .setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
   try {
-    const channel = member.guild.channels.cache.find((i) => i.name === 'general-chat');
+    const channel = member.guild.channels.cache.find(
+      (i) => i.name === 'general-chat'
+    );
     channel.send(embed2);
   } catch (err) {
     console.log('Guild channel not found!' + err);
@@ -88,13 +96,11 @@ Client.on('guildCreate', (guild) => {
   console.log(
     `New Server joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`
   );
-  Client.user.setActivity(`Active in ${Client.guilds.size} servers`);
 });
 
 /* If bot is removed from a guild while activated */
 Client.on('guildDelete', (guild) => {
   console.log(`I have been kicked from: ${guild.name} (id: ${guild.id})`);
-  Client.user.setActivity(`Active in ${Client.guilds.size} servers`);
 });
 
 /* If bot loses connection, auto reconnect */
@@ -129,10 +135,10 @@ Client.on('message', async (message) => {
         message.reply('who asked?');
         break;
       case 2:
-        message.reply({ files: ['./No one cares.mp4'] });
+        message.reply(`hey guess what?`, { files: ['./No one cares.mp4'] });
         break;
       case 3:
-        message.reply({ files: ['./shutit.mp4'] });
+        message.reply(`hey guess what?`, { files: ['./shutit.mp4'] });
         break;
       case 20:
         message.reply({ files: ['./video0_2.mp4'] });
@@ -141,7 +147,9 @@ Client.on('message', async (message) => {
         message.reply(`that's cringe. :grimacing:`);
         break;
       case 69:
-        message.reply({ files: ['./no one asked faggot.mp4'] });
+        message.reply(`hey guess what?`, {
+          files: ['./no one asked faggot.mp4'],
+        });
       default:
         return;
     }
