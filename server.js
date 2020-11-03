@@ -56,9 +56,7 @@ Client.on('guildMemberAdd', (member) => {
     .setTimestamp()
     .setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
   try {
-    const role = member.guild.roles.cache.find(
-      (role) => role.name === '698681043015827466'
-    );
+    const role = member.guild.roles.cache.find((role) => role.name === 'Gamer');
     member.roles.add(role);
   } catch (err) {
     console.log(err);
