@@ -126,7 +126,7 @@ module.exports.run = async (Client, message, args) => {
     .setTitle(`${gameTitle} SERVER INFO:`)
     .setThumbnail('https://img.icons8.com/plasticine/2x/server.png')
     .setFooter(
-      `Server query made by bryson#1337 using GameDig API`,
+      `https://brysondev.io`,
       'https://cdn.discordapp.com/emojis/522898117238980618.png?v=1'
     )
     .addFields(

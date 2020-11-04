@@ -139,7 +139,7 @@ Client.on('message', async (message) => {
         message.reply(`hey guess what?`, { files: ['./shutit.mp4'] });
         break;
       case 20:
-        message.reply({ files: ['./video0_2.mp4'] });
+        message.reply(`hey guess what?`, { files: ['./video0_2.mp4'] });
         break;
       case 40:
         message.reply(`that's cringe. :grimacing:`);
