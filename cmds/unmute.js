@@ -37,6 +37,11 @@ module.exports.run = async (Client, message, args) => {
   } catch (error) {
     message.reply(`Error: ${error}`);
   }
+  try {
+    Member.voice.setMute(false);
+  } catch (error) {
+    message.reply(`Error: ${error}`);
+  }
 
   message.channel
     .send(`${user} has been unmuted.`)
