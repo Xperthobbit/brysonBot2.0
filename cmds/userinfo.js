@@ -1,7 +1,7 @@
 const Discord = require('discord.js'); /* Include this if you use embeds, etc. */
 module.exports.run = async (Client, message, args) => {
   let userMention;
-  let member = message.mentions.members.first() || message.member;
+  let member;
   // const userMention = message.mentions.users.first() || message.author;
   if (args[0]) {
     if (!message.mentions.users.first()) {
@@ -19,11 +19,14 @@ module.exports.run = async (Client, message, args) => {
         );
       }
       userMention = Client.users.cache.get(memberid);
+      member = message.guild.member(memberid);
     } else {
       userMention = message.mentions.users.first();
+      member = message.mentions.members.first();
     }
   } else {
     userMention = message.author;
+    member = message.member;
   }
 
   let userinfo = {};
