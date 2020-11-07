@@ -30,7 +30,7 @@ module.exports.run = async (Client, message, args) => {
     const embed = new Discord.MessageEmbed()
       .setColor(0x5d2079)
       .setAuthor(user.username)
-      .setImage(user.displayAvatarURL({ dynamic: true }));
+      .setImage(user.displayAvatarURL({ dynamic: true, size: 4096 }));
     message.channel.send(embed).catch((error) => message.reply(`${error}`));
     msg.delete();
   } catch (error) {
