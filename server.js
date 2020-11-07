@@ -37,7 +37,7 @@ Client.on("ready", async () => {
   } catch (err) {
     console.log("Failed to generate link! Here is what we know: " + err.stack);
   }
-  Client.user.setActivity(`Sh-boom!`, { type: "CUSTOM_STATUS" });
+  Client.user.setActivity(`Sh-boom!`, { type: "STREAMING" });
   console.log("Servers deployed in:");
   Client.guilds.cache.forEach((guild) => {
     console.log(" - " + guild.name);
