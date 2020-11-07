@@ -32,7 +32,7 @@ module.exports.run = async (Client, message, args) => {
   userinfo.tag = userMention.tag;
   userinfo.uname = userMention.username;
 
-  userinfo.avatar = userMention.displayAvatarURL({ dynamic: true });
+  userinfo.avatar = userMention.displayAvatarURL({ dynamic: true,  size: 4096 });
 
   var myInfo = new Discord.MessageEmbed()
     .setAuthor(userinfo.uname, userinfo.avatar)
