@@ -1,6 +1,7 @@
 const Discord = require('discord.js'); /* Include this if you use embeds, etc. */
 module.exports.run = async (Client, message, args) => {
   let userMention;
+  let member = message.mentions.members.first() || message.member;
   // const userMention = message.mentions.users.first() || message.author;
   if (args[0]) {
     if (!message.mentions.users.first()) {
@@ -26,7 +27,7 @@ module.exports.run = async (Client, message, args) => {
   }
 
   let userinfo = {};
-  userinfo.bot = userMention.bot;
+  userinfo.joindate = member.joinedAt;
   userinfo.createdat = userMention.createdAt;
   userinfo.presen = userMention.presence;
   userinfo.tag = userMention.tag;
@@ -36,7 +37,7 @@ module.exports.run = async (Client, message, args) => {
 
   var myInfo = new Discord.MessageEmbed()
     .setAuthor(userinfo.uname, userinfo.avatar)
-    .addField('Bot?', userinfo.bot, false)
+    .addField('Joined Server', userinfo.joindate, false)
     .addField('Created At', userinfo.createdat, false)
     .addField('Client Tag', userinfo.tag, false)
     .setColor(0x5d2079)
