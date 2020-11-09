@@ -31,6 +31,7 @@ module.exports.run = async (Client, message, args) => {
         `aw-shit.png`
       );
       message.reply(attachment);
+      message.delete();
     }
   }
 };
