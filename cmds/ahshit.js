@@ -11,11 +11,6 @@ module.exports.run = async (Client, message, args) => {
       url.indexOf('gif', url.length - 'gif'.length) !== -1
     );
   }
-
-  if (message.attachments.size < 0)
-    return message.reply('make sure you attach an image first!');
-  if (message.attachments.size > 1)
-    return message.reply('one image at a time please!');
   if (message.attachments.size == 1) {
     if (message.attachments.every(attachIsImage)) {
       const canvas = Canvas.createCanvas(1280, 720);
@@ -33,6 +28,12 @@ module.exports.run = async (Client, message, args) => {
       message.reply(attachment);
       message.delete();
     }
+    else {
+      message.reply('please attach an image. (PNG/GIF/JPG)');
+    }
+  }
+  else {
+    message.reply('please attach an image. (PNG/GIF/JPG)');
   }
 };
 
