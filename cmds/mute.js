@@ -1,4 +1,6 @@
 /* mute.js */
+const fs = require('fs');
+const removedRoles = require('../mutes.json');
 module.exports.run = async (Client, message, args) => {
   let user;
   let muteRole = '701729671393443840'; // <-- Change me
@@ -29,19 +31,46 @@ module.exports.run = async (Client, message, args) => {
   }
 
   const Member = message.guild.member(user);
+  if (
+    Member.roles.cache.some((r) => {
+      r.id === '698680947024855080';
+    })
+  ) {
+    // <-- Admin role
+    return message.reply('I cannot mute someone with admin role!');
+  }
+  removedRoles[Member.id] = {
+    ids: [],
+  };
+
+  message.member.roles.cache.forEach((r) => {
+    if (r.name !== '@everyone') removedRoles[Member.id].ids.push(r.id);
+  });
+
+  //console.log(JSON.stringify(removedRoles));
+
   if (Member.roles.cache.has(muteRole))
     return message.reply('user already muted.');
 
   try {
     Member.roles.add(muteRole);
+    Member.roles.cache.forEach((r) => {
+      Member.roles.remove(r);
+    });
   } catch (error) {
     message.reply(`Error: ${error}`);
   }
   try {
-    Member.voice.setMute(true);
+    Member.voice.setMute(true).catch((err) => {
+      console.log(err);
+    });
   } catch (error) {
     message.reply(`Error: ${error}`);
   }
+
+  fs.writeFile('./mutes.json', JSON.stringify(removedRoles), (err) => {
+    if (err) console.log(err);
+  });
 
   message.channel
     .send(`${user} has been muted lol.`)
@@ -51,5 +80,5 @@ module.exports.run = async (Client, message, args) => {
 module.exports.help = {
   name: 'mute',
   usage: 'mute <user>',
-  info: 'Mutes user (Admin only)'
+  info: 'Mutes user (Admin only)',
 };

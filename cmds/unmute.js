@@ -1,4 +1,6 @@
 /* unmute.js */
+const fs = require('fs');
+const removedRoles = require('../mutes.json');
 module.exports.run = async (Client, message, args) => {
   let user;
   let muteRole = '701729671393443840'; // <-- Change me
@@ -29,16 +31,29 @@ module.exports.run = async (Client, message, args) => {
   }
 
   const Member = message.guild.member(user);
+
   if (!Member.roles.cache.has(muteRole))
     return message.reply('user already unmuted.');
 
+  if (!removedRoles.hasOwnProperty(Member.id)) {
+    return message.reply(
+      'ERROR! User roles missing! Something bad happened...'
+    );
+  }
+
   try {
     Member.roles.remove(muteRole);
+    removedRoles[Member.id].ids.forEach((r) => {
+      Member.roles.add(r);
+    });
   } catch (error) {
     message.reply(`Error: ${error}`);
   }
+
   try {
-    Member.voice.setMute(false);
+    Member.voice.setMute(false).catch((err) => {
+      console.log(err);
+    });
   } catch (error) {
     message.reply(`Error: ${error}`);
   }
@@ -51,5 +66,5 @@ module.exports.run = async (Client, message, args) => {
 module.exports.help = {
   name: 'unmute',
   usage: 'unmute <user>',
-  info: 'Unmute user (Admin Only)'
+  info: 'Unmute user (Admin Only)',
 };
