@@ -37,9 +37,9 @@ module.exports.run = async (Client, message, args) => {
     return message.reply('user already muted.');
 
   if (
-    Member.roles.cache.some((r) => {
-      r.id === '698680947024855080'; // <-- Admin role
-    })
+    Member.roles.cache.some(
+      (r) => r.id === '698680947024855080' // <-- Admin role
+    )
   ) {
     return message.reply('I cannot mute someone with admin role!');
   }
