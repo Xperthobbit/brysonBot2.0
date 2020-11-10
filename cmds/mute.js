@@ -31,27 +31,25 @@ module.exports.run = async (Client, message, args) => {
   }
 
   const Member = message.guild.member(user);
+  //console.log(JSON.stringify(removedRoles));
+
+  if (Member.roles.cache.has(muteRole))
+    return message.reply('user already muted.');
+
   if (
     Member.roles.cache.some((r) => {
-      r.id === '698680947024855080';
+      r.id === '698680947024855080'; // <-- Admin role
     })
   ) {
-    // <-- Admin role
     return message.reply('I cannot mute someone with admin role!');
   }
   removedRoles[Member.id] = {
     ids: [],
   };
 
-  message.member.roles.cache.forEach((r) => {
+  Member.roles.cache.forEach((r) => {
     if (r.name !== '@everyone') removedRoles[Member.id].ids.push(r.id);
   });
-
-  //console.log(JSON.stringify(removedRoles));
-
-  if (Member.roles.cache.has(muteRole))
-    return message.reply('user already muted.');
-
   try {
     Member.roles.add(muteRole);
     Member.roles.cache.forEach((r) => {
