@@ -51,21 +51,21 @@ module.exports.run = async (Client, message, args) => {
       });
 
       if (level === 100) {
-        await Member.roles.add(kingrole);
-        if (!Member.roles.cache.find((r) => r.id === kingrole))
+        if (!message.member.roles.cache.find((r) => r.id === kingrole)) {
+          await Member.roles.add(kingrole);
           message
             .reply(
               'Congrats Kang! You hit :100: so you get the KANGZ role! :crown:'
             )
             .catch((error) => message.reply(`${error}`));
-        else return;
+        } else message.reply('Congrats again for hitting that :100:');
       } else if (level === 0 || level === 1) {
-        await Member.roles.remove(kingrole);
-        if (Member.roles.cache.find((r) => r.id === kingrole))
+        if (message.member.roles.cache.find((r) => r.id === kingrole)) {
+          await Member.roles.remove(kingrole);
           message
             .reply('sorry scrub! You just lost your KANGZ role! :crown:')
             .catch((error) => message.reply(`${error}`));
-        else return;
+        } else message.reply(`imagine hitting ${level} when ur not even a kang yet LOL :monkey:`);
       }
     }
   } else {
