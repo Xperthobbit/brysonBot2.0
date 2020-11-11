@@ -20,7 +20,7 @@ module.exports.run = async (Client, message, args) => {
       canvas.height = background.height;
       ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
       const overlay = await Canvas.loadImage('./2yxpv8.png');
-      ctx.drawImage(overlay, 100, 10, canvas.width -20 , canvas.height -10);
+      ctx.drawImage(overlay, 0, 0, canvas.width, canvas.height);
       const attachment = new Discord.MessageAttachment(
         canvas.toBuffer(),
         `aw-shit.png`
