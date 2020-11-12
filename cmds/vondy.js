@@ -8,7 +8,8 @@ module.exports.run = async (Client, message, args) => {
         return (
           url.indexOf('png', url.length - 'png'.length) !== -1 ||
           url.indexOf('jpg', url.length - 'jpg'.length) !== -1 ||
-          url.indexOf('gif', url.length - 'gif'.length) !== -1
+          url.indexOf('gif', url.length - 'gif'.length) !== -1 ||
+          url.indexOf('jpeg', url.length - 'jpeg'.length) !== -1
         );
       }
       if (message.attachments.size == 1) {
