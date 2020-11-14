@@ -77,7 +77,7 @@ Client.on('guildMemberAdd', (member) => {
   //}
   try {
     const channel = member.guild.channels.cache.find(
-      (i) => i.name === 'general-chat'
+      (i) => i.id === '698680704770506885'
     );
     channel.send(embed2);
   } catch (err) {
@@ -95,7 +95,7 @@ Client.on('guildMemberRemove', (member) => {
     .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 4096 }));
   try {
     const channel = member.guild.channels.cache.find(
-      (i) => i.name === 'general-chat'
+      (i) => i.id === '698680704770506885'
     );
     channel.send(embed2);
   } catch (err) {
