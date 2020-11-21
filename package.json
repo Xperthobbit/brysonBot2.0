@@ -1,6 +1,6 @@
 {
   "name": "brysonbot2.0",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "2.0 version of brysonbot",
   "main": "server.js",
   "repository": {
@@ -14,13 +14,16 @@
   },
   "homepage": "https://github.com/brysondev/brysonbot2.0#readme",
   "dependencies": {
+    "@discordjs/opus": "^0.3.3",
     "canvas": "^2.6.1",
     "discord.js": "^12.4.1",
     "discord.js-commando": "^0.10.0",
+    "ffmpeg-static": "^4.2.7",
     "gamedig": "^2.0.23",
     "humanize-duration": "^3.24.0",
     "node.js": "0.0.1-security",
     "request": "^2.88.2",
+    "sodium": "^3.0.2",
     "uws": "^100.0.1"
   }
 }
