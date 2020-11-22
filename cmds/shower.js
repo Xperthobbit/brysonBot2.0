@@ -2,11 +2,6 @@ const { OpusEncoder } = require('@discordjs/opus');
 
 module.exports.run = async (Client, message, args) => {
   var user;
-  if (!message.member.hasPermission('ADMINISTRATOR')) {
-    return message.reply(
-      'nice try. You need Administrator rights to do that. :monkey:'
-    );
-  }
 
   if (!message.mentions.users.first()) {
     let memberid = message.guild.members.cache
@@ -25,6 +20,11 @@ module.exports.run = async (Client, message, args) => {
     user = Client.users.cache.get(memberid);
   } else {
     user = message.mentions.users.first();
+  }
+  if (!message.member.hasPermission('ADMINISTRATOR') && user.id !== message.author.id) {
+    return message.reply(
+      'you can only use this command on yourself. Admins can do it to everyone. :^)'
+    );
   }
   const showerChannel = '779527491177152512';
   if (message.guild.member(user).voice.channel) {
