@@ -47,12 +47,13 @@ module.exports.run = async (Client, message, args) => {
     ids: [],
   };
 
-  Member.roles.cache.forEach((r) => {
-    if (r.name !== '@everyone') removedRoles[Member.id].ids.push(r.id);
+  await Member.roles.cache.forEach((r) => {
+    if (r.name !== '@everyone' && r.name !== 'Server Booster')
+      removedRoles[Member.id].ids.push(r.id);
   });
   try {
     Member.roles.add(muteRole);
-    Member.roles.cache.forEach((r) => {
+    removedRoles[Member.id].ids.forEach((r) => {
       Member.roles.remove(r);
     });
   } catch (error) {

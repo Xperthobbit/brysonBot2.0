@@ -42,10 +42,11 @@ module.exports.run = async (Client, message, args) => {
   }
 
   try {
-    Member.roles.remove(muteRole);
-    removedRoles[Member.id].ids.forEach((r) => {
-      Member.roles.add(r);
-    });
+    await Member.roles.remove(muteRole).then(
+      removedRoles[Member.id].ids.forEach((r) => {
+        Member.roles.add(r);
+      })
+    );
   } catch (error) {
     message.reply(`Error: ${error}`);
   }
@@ -57,6 +58,12 @@ module.exports.run = async (Client, message, args) => {
   } catch (error) {
     message.reply(`Error: ${error}`);
   }
+
+  delete removedRoles[Member.id];
+
+  fs.writeFile('./mutes.json', JSON.stringify(removedRoles), (err) => {
+    if (err) console.log(err);
+  });
 
   message.channel
     .send(`${user} has been unmuted.`)
